@@ -1,9 +1,5 @@
 import { checkIfAlreadyPresent } from "../utilities";
 
-// export const checkIfAlreadyPresent = (array, itemId) => {
-//   const isPresent = array.find((product) => product.id === itemId);
-//   return isPresent;
-// };
 
 export function reducer(state, action) {
   switch (action.type) {

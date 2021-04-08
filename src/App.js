@@ -3,7 +3,7 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
 import "./styles.css";
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
 import {
   Navbar,
   Homepage,

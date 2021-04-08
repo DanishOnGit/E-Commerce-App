@@ -8,7 +8,7 @@ export function Cart() {
     dispatch
   } = useCart();
 
-  console.log("checking type", typeof cartItems);
+  
 
   async function removeFromCartHandler(item) {
     try {
@@ -65,7 +65,7 @@ export function Cart() {
   }
 
   const filteredCartData = getFilteredCartData(cartItems);
-  console.log("checking filteredcartdata", filteredCartData);
+  
 
   function calculateTotalMrp(filteredCartData){
     return filteredCartData.reduce(
@@ -96,8 +96,7 @@ export function Cart() {
   return (
     <>
       <h1 className="cart-header centered">Your Cart</h1>
-      {/* <h2>Total amount: Rs {totalCartAmount}</h2>
-      <h3>Total Items in Cart: {totalCartItems}</h3> */}
+      
       {cartItems.length === 0 && <h1>Cart is Empty</h1>}
       <div className="display-grid-2-2 cart-grid fixed-width">
         <div className="added-items-wrapper">

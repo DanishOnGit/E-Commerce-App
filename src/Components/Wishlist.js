@@ -12,7 +12,7 @@ export function Wishlist() {
 
 
   function getFilteredWishlistData(wishlistItems) {
-    console.log("wishlist items", wishlistItems);
+   
     return wishlistItems.filter((product) => product.existsInWishlist === true);
   }
 

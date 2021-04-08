@@ -13,8 +13,7 @@ export async function wishlistHandler(wishlistItems, dispatch, item) {
       });
 
       if (response.status === 201) {
-        console.log("logging wishes...", response);
-        console.log("addded to wishes");
+       
         dispatch({
           type: "ADD_TO_WISHLIST",
           payload: response.data.wishlistItem

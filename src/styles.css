@@ -7,8 +7,7 @@
   --green-color:green;
   --red-color:red;
 --light-grey-color:rgba(214, 212, 212, 0.535);
-
---z-99:99;
+--z-index-99:99;
 }
 .App {
   font-family: sans-serif;
@@ -263,7 +262,7 @@ fieldset {
 .details-wrapper {
   padding: 0 1rem;
   flex: 3;
-  /* background-color:salmon; */
+  
 }
 .details-wrapper > * {
   margin-bottom: 0.1rem;
@@ -355,5 +354,5 @@ fieldset {
   position: fixed;
   top: 5rem;
   right: 1rem;
-  z-index: var(--z-99);
+  z-index: var(--z-index-99);
 }

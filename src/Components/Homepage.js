@@ -1,8 +1,8 @@
-import { useCart } from "../Contexts";
+
 import coverPic from "../images/cover-image.jpg";
 import { Link} from "react-router-dom";
 export function Homepage() {
-  const { dispatch } = useCart();
+  
   return (
     <div className="home-page-wrapper">
       <img className="cover-pic" src={coverPic} alt="cover-pic"/>
