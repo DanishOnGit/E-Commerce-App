@@ -14,13 +14,13 @@ export const Navbar = ({searchText,setSearchText}) => {
 
   return (
     <div>
-      <nav class="nav-wrapper-3">
-        <div class="logoAndList-wrapper">
+      <nav className="nav-wrapper-3">
+        <div className="logoAndList-wrapper">
           <Link to="/">
-            <div class="brand">LOGO.</div>
+            <div className="brand">LOGO.</div>
           </Link>
-          <div class="list-centered">
-            <ul class="list-items-flex list-non-bullet" id="list-addon-3">
+          <div className="list-centered">
+            <ul className="list-items-flex list-non-bullet" id="list-addon-3">
               <NavLink to="productsListingPage" activeClassName="active-page">
                 <li className="all-products">Products</li>
               </NavLink>
