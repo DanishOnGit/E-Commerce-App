@@ -3,10 +3,11 @@ import { checkIfAlreadyPresent } from "../utilities";
 
 export async function wishlistHandler(wishlistItems, dispatch, item,showToast,setIsDisabled,isRendered) {
   try {
-    showToast(`Adding ${item.brand} to wishlist...`,"info");
-    setIsDisabled(true);
+   
     const returnedValue = checkIfAlreadyPresent(wishlistItems, item.id);
     if (!returnedValue) {
+      showToast(`Adding ${item.brand} to wishlist...`,"info");
+      setIsDisabled(true);
       const response = await axios.post("./api/wishlistItems", {
         wishlistItem: {
           ...item,
