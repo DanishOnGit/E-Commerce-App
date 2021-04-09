@@ -44,7 +44,7 @@ const [isDisabled,setIsDisabled]=useState(false);
         {filteredWishlistData.map((item) => {
           
           return (
-            <div key={item.id} className="image-card-wrapper">
+            <div key={item.id} className={item.inStock?"image-card-wrapper":"image-card-wrapper no-hover"}>
               <div className="product-details-wrapper">
                 <div className="card-image">
                   <img src={item.image} alt="..." />
