@@ -46,7 +46,7 @@ const [isDisabled,setIsDisabled]=useState(false);
         <p className="strong relative-positioned">
           {product.brand}
           <button
-            onClick={() => wishlistHandler(wishlistItems, dispatch, product)}
+            onClick={() => wishlistHandler(wishlistItems, dispatch, product,showToast,setIsDisabled,isRendered)}
             className="btn-icon add-to-wishlist-btn "
           >
             <i

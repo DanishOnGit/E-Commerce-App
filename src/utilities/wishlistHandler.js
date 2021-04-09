@@ -1,8 +1,10 @@
 import axios from "axios";
 import { checkIfAlreadyPresent } from "../utilities";
 
-export async function wishlistHandler(wishlistItems, dispatch, item) {
+export async function wishlistHandler(wishlistItems, dispatch, item,showToast,setIsDisabled,isRendered) {
   try {
+    showToast(`Adding ${item.brand} to wishlist...`,"info");
+    setIsDisabled(true);
     const returnedValue = checkIfAlreadyPresent(wishlistItems, item.id);
     if (!returnedValue) {
       const response = await axios.post("./api/wishlistItems", {
@@ -13,7 +15,7 @@ export async function wishlistHandler(wishlistItems, dispatch, item) {
       });
 
       if (response.status === 201) {
-       
+        showToast(`Added!`,"success");
         dispatch({
           type: "ADD_TO_WISHLIST",
           payload: response.data.wishlistItem
@@ -35,5 +37,14 @@ export async function wishlistHandler(wishlistItems, dispatch, item) {
     }
   } catch (err) {
     console.log(err);
+    showToast(`Could not add ${item.brand} to wishlist!`,"failure")
+
+  }
+  finally{
+
+    if (isRendered) { 
+      setIsDisabled(false)
+    }
+
   }
 }
