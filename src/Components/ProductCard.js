@@ -38,8 +38,11 @@ const [isDisabled,setIsDisabled]=useState(false);
       <div className="card-image">
         <img src={product.image} alt="..." />
 
-        {product.fastDelivery && (
+        {(product.fastDelivery && product.inStock) && (
           <span className="badge-success">Fast-Delivery</span>
+        )}
+        { !product.inStock && (
+          <span className="badge-neutral">Out of Stock</span>
         )}
       </div>
       <div className="product-details-wrapper">
