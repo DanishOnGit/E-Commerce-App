@@ -1,9 +1,20 @@
-
-import { useCart } from "../Contexts";
+import {useState,useEffect,useRef} from "react";
+import { useCart,useToast} from "../Contexts";
 import {wishlistHandler,addToCartHandler,getFinalPrice} from "../utilities";
 
 
 export function Wishlist() {
+  let isRendered=useRef(true)
+
+ 
+  useEffect(()=>{
+isRendered.current=true
+    return ()=>{isRendered.current=false}
+  },[])
+
+const [isDisabled,setIsDisabled]=useState(false);
+
+ const {showToast} =useToast();
 
   const {
     state: { wishlistItems, cartItems },
@@ -54,8 +65,9 @@ export function Wishlist() {
                 </div>
               </div>
               <button
-                onClick={() => {addToCartHandler(cartItems,dispatch,item);wishlistHandler(wishlistItems,dispatch,item)}}
-                className="btn btn-outline-primary"
+              disabled={!item.inStock || isDisabled }
+                onClick={() => {addToCartHandler(cartItems,dispatch,item,showToast,setIsDisabled,isRendered);wishlistHandler(wishlistItems,dispatch,item)}}
+                className={item.inStock?"btn btn-outline-primary":"btn btn-primary disabled"}
               >
                 Move to cart
               </button>

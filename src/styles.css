@@ -134,6 +134,12 @@ background-color:var(--pri-color);
   box-shadow: 0 0 10px 1px var(--grey-color);
   transition: 300ms ease;
 }
+.image-card-wrapper.no-hover{
+  color:var(--grey-color);
+}
+.image-card-wrapper.no-hover:hover{
+  box-shadow: none;
+}
 .product-details-wrapper {
   text-align: left;
   flex-grow: 2;

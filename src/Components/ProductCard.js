@@ -34,7 +34,7 @@ const [isDisabled,setIsDisabled]=useState(false);
     return result && result.existsInWishlist ? "salmon" : "grey";
   }
   return (
-    <div key={product.id} className="image-card-wrapper ">
+    <div key={product.id} className={product.inStock?"image-card-wrapper":"image-card-wrapper no-hover"}>
       <div className="card-image">
         <img src={product.image} alt="..." />
 
