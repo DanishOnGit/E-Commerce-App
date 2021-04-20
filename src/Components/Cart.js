@@ -48,7 +48,7 @@ export function Cart() {
   }
 
   function decreaseQuantityHandler(item) {
-    if (item.cartQuantity >= 1) {
+    if (item.cartQuantity > 1) {
       axios.post("./api/cartItems", {
         cartItem: {
           ...item,
