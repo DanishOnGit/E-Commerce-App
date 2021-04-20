@@ -8,8 +8,9 @@ export const Navbar = ({searchText,setSearchText}) => {
   } = useCart();
 
   function totalCartItems(cartItems) {
-    const array = cartItems.filter((product) => product.existsInCart);
-    return array.length;
+    const total= cartItems.reduce((acc,cv)=>acc+cv.cartQuantity,0)
+    return total;
+
   }
 
   return (

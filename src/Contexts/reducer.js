@@ -131,7 +131,7 @@ export function reducer(state, action) {
       return {
         ...state,
         cartItems: state.cartItems.map((product) => {
-          if (product.id === action.payload.id && product.cartQuantity >= 1) {
+          if (product.id === action.payload.id && product.cartQuantity > 1) {
             return { ...product, cartQuantity: product.cartQuantity - 1 };
           }
           return { ...product };
