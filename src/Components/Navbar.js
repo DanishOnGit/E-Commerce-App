@@ -17,12 +17,12 @@ export const Navbar = ({ searchText, setSearchText }) => {
     <div>
       <nav className="nav-wrapper-3">
         <div className="logoAndList-wrapper">
-          <Link to="/">
+          <Link to="/" className="styled">
             <div className="brand">LOGO.</div>
           </Link>
           <div className="list-centered">
             <ul className="list-items-flex list-non-bullet" id="list-addon-3">
-              <NavLink to="productsListingPage" activeClassName="active-page">
+              <NavLink to="productsListingPage" className="styled" activeClassName="active-page">
                 <li className="all-products">Products</li>
               </NavLink>
             </ul>
