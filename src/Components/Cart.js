@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useCart } from "../Contexts";
-import { wishlistHandler, checkIfAlreadyPresent,getFinalPrice } from "../utilities";
+import {
+  wishlistHandler,
+  checkIfAlreadyPresent,
+  getFinalPrice
+} from "../utilities";
 
 export function Cart() {
   const {
@@ -8,18 +12,22 @@ export function Cart() {
     dispatch
   } = useCart();
 
-  
-
   async function removeFromCartHandler(item) {
     try {
-      const response = await axios.post("./api/cartItems", {
-        cartItem: {
-          ...item,
+      const response = await axios.post(
+        "https://Badminton-ecomm.danishahmed27.repl.co/cart",
+
+        {
+          _id: item._id,
           existsInCart: false
         }
-      });
-      if (response.status === 201) {
-        dispatch({ type: "REMOVE_FROM_CART", payload: item });
+      );
+
+      if (response.status === 200) {
+        dispatch({
+          type: "GET_CART_ITEMS",
+          payload: response.data.cartItem.cartItems
+        });
       }
     } catch (err) {
       console.log(err);
@@ -28,7 +36,7 @@ export function Cart() {
 
   function movetowishlist(item) {
     removeFromCartHandler(item);
-    const response = checkIfAlreadyPresent(wishlistItems, item.id);
+    const response = checkIfAlreadyPresent(wishlistItems, item._id);
     if (!response) {
       wishlistHandler(wishlistItems, dispatch, item);
     } else if (response && response.existsInWishlist === false) {
@@ -36,28 +44,43 @@ export function Cart() {
     }
   }
 
-  function increaseQuantityHandler(item) {
-    axios.post("./api/cartItems", {
-      cartItem: {
-        ...item,
-        cartQuantity: item.cartQuantity + 1
-      }
-    });
-
-    dispatch({ type: "INCREASE_PRODUCT_QUANTITY", payload: item });
+  async function increaseQuantityHandler(item, cartQuantity) {
+    try {
+      const response = await axios.post(
+        `https://Badminton-ecomm.danishahmed27.repl.co/cart`,
+        {
+          _id: item._id,
+          cartQuantity: cartQuantity + 1
+        }
+      );
+      
+      dispatch({
+        type: "GET_CART_ITEMS",
+        payload: response.data.cartItem.cartItems
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  function decreaseQuantityHandler(item) {
-    if (item.cartQuantity > 1) {
-      axios.post("./api/cartItems", {
-        cartItem: {
-          ...item,
-          cartQuantity: item.cartQuantity - 1
-        }
-      });
+  async function decreaseQuantityHandler(item, cartQuantity) {
+    try {
+      if (cartQuantity > 1) {
+        const response = await axios.post(
+          `https://Badminton-ecomm.danishahmed27.repl.co/cart`,
+          {
+            _id: item._id,
+            cartQuantity: cartQuantity - 1
+          }
+        );
+        dispatch({
+          type: "GET_CART_ITEMS",
+          payload: response.data.cartItem.cartItems
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-
-    dispatch({ type: "DECREASE_PRODUCT_QUANTITY", payload: item });
   }
 
   function getFilteredCartData(cartItems) {
@@ -65,19 +88,20 @@ export function Cart() {
   }
 
   const filteredCartData = getFilteredCartData(cartItems);
-  
-
-  function calculateTotalMrp(filteredCartData){
+  function calculateTotalMrp(filteredCartData) {
     return filteredCartData.reduce(
-      (total, item) => total + Number(item.price) * item.cartQuantity,
+      (total, item) => total + Number(item.productId.price) * item.cartQuantity,
       0
     );
   }
-  const totalMrp=calculateTotalMrp(filteredCartData);
+  const totalMrp = calculateTotalMrp(filteredCartData);
 
   function calculateTotalCartAmount(filteredCartData) {
     return filteredCartData.reduce(
-      (total, item) => total + Number(getFinalPrice(item.price,item.offer)) * item.cartQuantity,
+      (total, item) =>
+        total +
+        Number(getFinalPrice(item.productId.price, item.productId.discount)) *
+          item.cartQuantity,
       0
     );
   }
@@ -91,16 +115,14 @@ export function Cart() {
   }
   const totalCartItems = calculateTotalCartItems(filteredCartData);
 
-  
-
   return (
     <>
       <h1 className="cart-header centered">Your Cart</h1>
-      
+
       {cartItems.length === 0 && <h1>Cart is Empty</h1>}
       <div className="display-grid-2-2 cart-grid fixed-width">
         <div className="added-items-wrapper">
-          {filteredCartData.map((item) => {
+          {filteredCartData.map(({ cartQuantity, productId: item }) => {
             return (
               <div className="outlined resized margin-bottom">
                 <div className="image-and-details-wrapper-cart">
@@ -115,19 +137,25 @@ export function Cart() {
                     <h4 className="brand">{item.brand}</h4>
                     <p className="description">Carbon and blah blha blha..</p>
                     <p className="offer-wrapper">
-                      <span>Rs.{getFinalPrice(item.price,item.offer)}</span>{" "}
-                      <span className="line-through small">Rs.{item.price}</span>
-                      <span className="discount">{item.offer}% OFF</span>
+                      <span>Rs.{getFinalPrice(item.price, item.discount)}</span>{" "}
+                      <span className="line-through small">
+                        Rs.{item.price}
+                      </span>
+                      <span className="discount">{item.discount}% OFF</span>
                     </p>
                     <button
-                      onClick={() => decreaseQuantityHandler(item)}
+                      onClick={() =>
+                        decreaseQuantityHandler(item, cartQuantity)
+                      }
                       className="btn btn-secondary decrease"
                     >
                       -
                     </button>{" "}
-                    <span className="quantity">{item.cartQuantity}</span>{" "}
+                    <span className="quantity">{cartQuantity}</span>{" "}
                     <button
-                      onClick={() => increaseQuantityHandler(item)}
+                      onClick={() =>
+                        increaseQuantityHandler(item, cartQuantity)
+                      }
                       className="btn btn-secondary increase"
                     >
                       +
@@ -167,7 +195,9 @@ export function Cart() {
 
           <div>
             <p>Discount on MRP:</p>
-            <p className="discounted-amount">-Rs.{totalMrp-totalCartAmount}</p>
+            <p className="discounted-amount">
+              -Rs.{totalMrp - totalCartAmount}
+            </p>
           </div>
 
           <div>
