@@ -1,58 +1,64 @@
-
 import axios from "axios";
-import {checkIfAlreadyPresent} from "../utilities";
+import { checkIfAlreadyPresent } from "../utilities";
 
-export async function addToCartHandler(cartItems,dispatch,item,showToast,setIsDisabled,isRendered) {
-  
+export async function addToCartHandler(
+  cartItems,
+  dispatch,
+  item,
+  showToast,
+  setIsDisabled,
+  isRendered
+) {
   try {
-    
-    showToast(`Adding ${item.brand} to cart...`,"info");
+    showToast(`Adding ${item.brand} to cart...`, "info");
     setIsDisabled(true);
-    const returnedValue = checkIfAlreadyPresent(cartItems, item.id);
+    const returnedValue = checkIfAlreadyPresent(cartItems, item._id);
 
     if (!returnedValue) {
-      const response = await axios.post("./api/cartItems", {
-        cartItem: {
-          ...item,
+      const response = await axios.post(
+        "https://Badminton-ecomm.danishahmed27.repl.co/cart",
+        {
+          _id: item._id,
           cartQuantity: 1,
           existsInCart: true
         }
-      });
-      
+      );
+
       if (response.status === 201) {
-        showToast(`Added!`,"success");
-        dispatch({ type: "ADD_TO_CART", payload: response.data.cartItem });
+        showToast(`Added!`, "success");
+        dispatch({
+          type: "GET_CART_ITEMS",
+          payload: response.data.cartItem.cartItems
+        });
       }
-     
     } else {
       if (returnedValue.existsInCart) {
         dispatch({ type: "SET_ROUTE", payload: "cart" });
       } else {
-        const response = await axios.put(
-          `./api/cartItems/${returnedValue.id}`,
+        const response = await axios.post(
+          `https://Badminton-ecomm.danishahmed27.repl.co/cart`,
+
           {
-            cartItem: {
-              ...item,
-              cartQuantity: 1,
-              existsInCart: true
-            }
+            _id: item._id,
+            cartQuantity: 1,
+            existsInCart: true
           }
         );
-        
+
         if (response.status === 200) {
-          dispatch({ type: "ADD_TO_CART", payload: response.data.cartItem });
+          dispatch({
+            type: "GET_CART_ITEMS",
+            payload: response.data.cartItem.cartItems
+          });
         }
       }
     }
   } catch (err) {
     console.log(err);
-    showToast(`Could not add ${item.brand} to cart!`,"failure")
-  }
-  finally{
-
-    if (isRendered) { 
-      setIsDisabled(false)
+    showToast(`Could not add ${item.brand} to cart!`, "failure");
+  } finally {
+    if (isRendered) {
+      setIsDisabled(false);
     }
-
   }
 }
