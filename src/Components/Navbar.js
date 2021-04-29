@@ -1,16 +1,16 @@
 import { useCart } from "../Contexts";
 import { Searchbar } from "./Searchbar";
-import { Link,NavLink } from "react-router-dom";
-export const Navbar = ({searchText,setSearchText}) => {
+import { Link, NavLink } from "react-router-dom";
+export const Navbar = ({ searchText, setSearchText }) => {
   const {
     state: { cartItems },
     dispatch
   } = useCart();
 
   function totalCartItems(cartItems) {
-    const total= cartItems.reduce((acc,cv)=>acc+cv.cartQuantity,0)
+    const result = cartItems.filter((item) => item.existsInCart);
+    const total = result.reduce((acc, cv) => acc + cv.cartQuantity, 0);
     return total;
-
   }
 
   return (
@@ -47,10 +47,10 @@ export const Navbar = ({searchText,setSearchText}) => {
                   }
                   className="btn-icon btn-icon-hover relative-positioned"
                 >
-                  
-                  
-              <span className="badge-on-icon">{totalCartItems(cartItems)}</span>
-              <i className="fas fa-shopping-cart"></i>
+                  <span className="badge-on-icon">
+                    {totalCartItems(cartItems)}
+                  </span>
+                  <i className="fas fa-shopping-cart"></i>
                 </button>
               </Link>
             </li>
