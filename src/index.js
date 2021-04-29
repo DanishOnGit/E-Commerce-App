@@ -1,10 +1,8 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import setupMockServer from "./database/productsDatabase";
-import { CartProvider ,ToastProvider} from "./Contexts";
+import { CartProvider, ToastProvider } from "./Contexts";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
-setupMockServer();
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
@@ -12,7 +10,7 @@ ReactDOM.render(
     <Router>
       <CartProvider>
         <ToastProvider>
-        <App />
+          <App />
         </ToastProvider>
       </CartProvider>
     </Router>
