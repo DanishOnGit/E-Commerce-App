@@ -1,11 +1,7 @@
 import { useCart } from "../Contexts";
 import { SortAndFilter } from "./SortAndFilter";
 import { Toast } from "./Toast";
-// import {wishlistHandler,addToCartHandler,checkIfAlreadyPresent} from "../utilities";
 import { ProductCard } from "./ProductCard";
-
-// import spinner from "../images/Spinner-3.gif";
-// import {getFinalPrice} from "../utilities"
 
 export const ProductsListingPage = ({ productsList, searchText }) => {
   const {
@@ -23,11 +19,11 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
         (product1, product2) =>
           Math.floor(
             Number(product1.price) -
-              (Number(product1.price) * Number(product1.offer)) / 100
+              (Number(product1.price) * Number(product1.discount)) / 100
           ) -
           Math.floor(
             Number(product2.price) -
-              (Number(product2.price) * Number(product2.offer)) / 100
+              (Number(product2.price) * Number(product2.discount)) / 100
           )
       );
     }
@@ -37,11 +33,11 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
         (product1, product2) =>
           Math.floor(
             Number(product2.price) -
-              (Number(product2.price) * Number(product2.offer)) / 100
+              (Number(product2.price) * Number(product2.discount)) / 100
           ) -
           Math.floor(
             Number(product1.price) -
-              (Number(product1.price) * Number(product1.offer)) / 100
+              (Number(product1.price) * Number(product1.discount)) / 100
           )
       );
     }
@@ -87,7 +83,7 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
         <SortAndFilter />
         <div className="display-grid-2-2">
           {filteredData.map((product) => {
-            return <ProductCard key={product.id} product={product} />;
+            return <ProductCard key={product._id} product={product} />;
           })}
         </div>
       </div>
