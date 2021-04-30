@@ -119,94 +119,98 @@ export function Cart() {
     <>
       <h1 className="cart-header centered">Your Cart</h1>
 
-      {cartItems.length === 0 && <h1>Cart is Empty</h1>}
-      <div className="display-grid-2-2 cart-grid fixed-width">
-        <div className="added-items-wrapper">
-          {filteredCartData.map(({ cartQuantity, productId: item }) => {
-            return (
-              <div className="outlined resized margin-bottom">
-                <div className="image-and-details-wrapper-cart">
-                  <div className="card-image resized-image">
-                    <img
-                      className="cart-card-image"
-                      src={item.image}
-                      alt="..."
-                    />
+     {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
+      {filteredCartData.length !== 0 && (
+        <div className="display-grid-2-2 cart-grid fixed-width">
+          <div className="added-items-wrapper">
+            {filteredCartData.map(({ cartQuantity, productId: item }) => {
+              return (
+                <div className="outlined resized margin-bottom">
+                  <div className="image-and-details-wrapper-cart">
+                    <div className="card-image resized-image">
+                      <img
+                        className="cart-card-image"
+                        src={item.image}
+                        alt="..."
+                      />
+                    </div>
+                    <div className="details-wrapper">
+                      <h4 className="brand">{item.brand}</h4>
+                      <p className="description">Carbon and blah blha blha..</p>
+                      <p className="offer-wrapper">
+                        <span>
+                          Rs.{getFinalPrice(item.price, item.discount)}
+                        </span>{" "}
+                        <span className="line-through small">
+                          Rs.{item.price}
+                        </span>
+                        <span className="discount">{item.discount}% OFF</span>
+                      </p>
+                      <button
+                        onClick={() =>
+                          decreaseQuantityHandler(item, cartQuantity)
+                        }
+                        className="btn btn-secondary decrease"
+                      >
+                        -
+                      </button>{" "}
+                      <span className="quantity">{cartQuantity}</span>{" "}
+                      <button
+                        onClick={() =>
+                          increaseQuantityHandler(item, cartQuantity)
+                        }
+                        className="btn btn-secondary increase"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <div className="details-wrapper">
-                    <h4 className="brand">{item.brand}</h4>
-                    <p className="description">Carbon and blah blha blha..</p>
-                    <p className="offer-wrapper">
-                      <span>Rs.{getFinalPrice(item.price, item.discount)}</span>{" "}
-                      <span className="line-through small">
-                        Rs.{item.price}
-                      </span>
-                      <span className="discount">{item.discount}% OFF</span>
-                    </p>
+                  <div className="cta-wrapper">
                     <button
-                      onClick={() =>
-                        decreaseQuantityHandler(item, cartQuantity)
-                      }
-                      className="btn btn-secondary decrease"
+                      onClick={() => removeFromCartHandler(item)}
+                      className="btn btn-link btn-link-hover remove"
                     >
-                      -
-                    </button>{" "}
-                    <span className="quantity">{cartQuantity}</span>{" "}
+                      REMOVE
+                    </button>
+
                     <button
-                      onClick={() =>
-                        increaseQuantityHandler(item, cartQuantity)
-                      }
-                      className="btn btn-secondary increase"
+                      onClick={() => movetowishlist(item)}
+                      className="btn btn-link btn-link-hover wishlist"
                     >
-                      +
+                      MOVE TO WISHLIST
                     </button>
                   </div>
                 </div>
-                <div className="cta-wrapper">
-                  <button
-                    onClick={() => removeFromCartHandler(item)}
-                    className="btn btn-link btn-link-hover remove"
-                  >
-                    REMOVE
-                  </button>
+              );
+            })}
+          </div>
+          <div className="card-total-wrapper">
+            <h3>Cart Details</h3>
+            <div>
+              <p>Nos. of items: </p>
+              <p>{totalCartItems}</p>
+            </div>
 
-                  <button
-                    onClick={() => movetowishlist(item)}
-                    className="btn btn-link btn-link-hover wishlist"
-                  >
-                    MOVE TO WISHLIST
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+            <div>
+              <p>Total MRP:</p>
+              <p>Rs.{totalMrp}</p>
+            </div>
+
+            <div>
+              <p>Discount on MRP:</p>
+              <p className="discounted-amount">
+                -Rs.{totalMrp - totalCartAmount}
+              </p>
+            </div>
+
+            <div>
+              <p>Total Amount:</p>
+              <p className="strong">Rs. {totalCartAmount}</p>
+            </div>
+            <button className="btn btn-primary">Place Order</button>
+          </div>
         </div>
-        <div className="card-total-wrapper">
-          <h3>Cart Details</h3>
-          <div>
-            <p>Nos. of items: </p>
-            <p>{totalCartItems}</p>
-          </div>
-
-          <div>
-            <p>Total MRP:</p>
-            <p>Rs.{totalMrp}</p>
-          </div>
-
-          <div>
-            <p>Discount on MRP:</p>
-            <p className="discounted-amount">
-              -Rs.{totalMrp - totalCartAmount}
-            </p>
-          </div>
-
-          <div>
-            <p>Total Amount:</p>
-            <p className="strong">Rs. {totalCartAmount}</p>
-          </div>
-          <button className="btn btn-primary">Place Order</button>
-        </div>
-      </div>
+      )}
     </>
   );
 }
