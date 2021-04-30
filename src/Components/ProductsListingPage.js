@@ -56,7 +56,7 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
       .filter((item) => (showFullInventory ? true : item.inStock))
       .filter((item) => (showFastDeliveryOnly ? item.fastDelivery : true))
       .filter((item) => item.price <= Number(priceRangeControl))
-      .filter((item) => (searchText ? item.brand.includes(searchText) : item));
+      .filter((item) => (searchText ? item.brand.includes(searchText.charAt(0).toUpperCase()) : item));
   }
 
   const sortedData = getSortedData(productsList, sortBy);
