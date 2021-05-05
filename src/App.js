@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { PrivateRoute } from "./PrivateRoute";
 import { Routes, Route } from "react-router-dom";
 import "./styles.css";
 import {
   Navbar,
   Homepage,
   ProductsListingPage,
+  Login,
+  Signup,
+  PageNotFound,
   Cart,
   Wishlist
 } from "./Components";
@@ -87,8 +91,13 @@ export default function App() {
             />
           }
         />
-        <Route path="cart" element={<Cart />} />
-        <Route path="wishlist" element={<Wishlist />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <PrivateRoute path="/cart" element={<Cart />} />
+        <PrivateRoute path="/wishlist" element={<Wishlist />} />
+        {/* <Route path="cart" element={<Cart />} />
+        <Route path="wishlist" element={<Wishlist />} /> */}
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
