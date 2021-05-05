@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
-
 import "./styles.css";
-// import Loader from "react-loader-spinner";
 import {
   Navbar,
   Homepage,
@@ -16,7 +14,7 @@ import { useCart } from "./Contexts/CartContext";
 export default function App() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [searchText,setSearchText]=useState("")
+  const [searchText, setSearchText] = useState("");
 
   const {
     state: { productsList },
@@ -27,9 +25,11 @@ export default function App() {
     (async function () {
       try {
         setLoading(true);
-        const response = await axios.get("./api/products");
+        const response = await axios.get(
+          "https://Badminton-ecomm.danishahmed27.repl.co/productsListingPage"
+        );
         dispatch({ type: "GET_PRODUCTSLIST", payload: response.data.products });
-        // setProductsList(response.data.products);
+
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -39,11 +39,13 @@ export default function App() {
     })();
     (async function () {
       try {
-        const response = await axios.get("./api/wishlistItems");
-        console.log(response);
+        const response = await axios.get(
+          "https://Badminton-ecomm.danishahmed27.repl.co/wishlist"
+        );
+
         dispatch({
           type: "GET_WISHLIST_ITEMS",
-          payload: response.data.wishlistItems
+          payload: response.data.wishlistItem1.wishlistItems
         });
       } catch (err) {
         console.log(err);
@@ -51,23 +53,24 @@ export default function App() {
     })();
     (async function () {
       try {
-        const response = await axios.get("./api/cartItems");
-        dispatch({ type: "GET_CART_ITEMS", payload: response.data.cartItems });
+        const response = await axios.get(
+          "https://Badminton-ecomm.danishahmed27.repl.co/cart"
+        );
+
+        dispatch({
+          type: "GET_CART_ITEMS",
+          payload: response.data.cartItem1.cartItems
+        });
       } catch (err) {
         console.log(err);
       }
     })();
-    
   }, []);
 
   return (
     <div className="App">
       <Navbar searchText={searchText} setSearchText={setSearchText} />
-{/* 
-      {loading && (
-        <Loader type="ThreeDots" color="#fc452e" height={80} width={80} />
-      )} */}
-  
+
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route
@@ -79,7 +82,8 @@ export default function App() {
               productsList={productsList}
               errorMsg={errorMsg}
               setErrorMsg={setErrorMsg}
-              searchText={searchText} setSearchText={setSearchText}
+              searchText={searchText}
+              setSearchText={setSearchText}
             />
           }
         />

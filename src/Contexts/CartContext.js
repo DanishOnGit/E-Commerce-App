@@ -8,7 +8,7 @@ export function CartProvider({ children }) {
     showFullInventory: true,
     showFastDeliveryOnly: false,
     sortBy: null,
-    priceRangeControl: 1000,
+    priceRangeControl: 5000,
     productsList: [],
     cartItems: [],
     wishlistItems: [],

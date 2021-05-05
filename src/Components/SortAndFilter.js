@@ -44,7 +44,7 @@ export function SortAndFilter() {
             value={priceRangeControl}
             type="range"
             min="50"
-            max="1000"
+            max="5000"
             step="10"
           />
         </label>

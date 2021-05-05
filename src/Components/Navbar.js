@@ -1,28 +1,28 @@
 import { useCart } from "../Contexts";
 import { Searchbar } from "./Searchbar";
-import { Link,NavLink } from "react-router-dom";
-export const Navbar = ({searchText,setSearchText}) => {
+import { Link, NavLink } from "react-router-dom";
+export const Navbar = ({ searchText, setSearchText }) => {
   const {
     state: { cartItems },
     dispatch
   } = useCart();
 
   function totalCartItems(cartItems) {
-    const total= cartItems.reduce((acc,cv)=>acc+cv.cartQuantity,0)
+    const result = cartItems.filter((item) => item.existsInCart);
+    const total = result.reduce((acc, cv) => acc + cv.cartQuantity, 0);
     return total;
-
   }
 
   return (
     <div>
       <nav className="nav-wrapper-3">
         <div className="logoAndList-wrapper">
-          <Link to="/">
+          <Link to="/" className="styled">
             <div className="brand">LOGO.</div>
           </Link>
           <div className="list-centered">
             <ul className="list-items-flex list-non-bullet" id="list-addon-3">
-              <NavLink to="productsListingPage" activeClassName="active-page">
+              <NavLink to="productsListingPage" className="styled" activeClassName="active-page">
                 <li className="all-products">Products</li>
               </NavLink>
             </ul>
@@ -47,10 +47,10 @@ export const Navbar = ({searchText,setSearchText}) => {
                   }
                   className="btn-icon btn-icon-hover relative-positioned"
                 >
-                  
-                  
-              <span className="badge-on-icon">{totalCartItems(cartItems)}</span>
-              <i className="fas fa-shopping-cart"></i>
+                  <span className="badge-on-icon">
+                    {totalCartItems(cartItems)}
+                  </span>
+                  <i className="fas fa-shopping-cart"></i>
                 </button>
               </Link>
             </li>

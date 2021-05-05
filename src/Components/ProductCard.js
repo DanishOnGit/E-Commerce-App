@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart, useToast } from "../Contexts";
-
 import {
   wishlistHandler,
   addToCartHandler,
@@ -8,40 +8,47 @@ import {
   getFinalPrice
 } from "../utilities";
 export function ProductCard({ product }) {
+  const navigate = useNavigate();
 
- let isRendered=useRef(true)
+  let isRendered = useRef(true);
 
- 
-  useEffect(()=>{
-isRendered.current=true
-    return ()=>{isRendered.current=false}
-  },[])
+  useEffect(() => {
+    isRendered.current = true;
+    return () => {
+      isRendered.current = false;
+    };
+  }, []);
 
-const [isDisabled,setIsDisabled]=useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
- const {showToast} =useToast();
+  const { showToast } = useToast();
   const {
     state: { cartItems, wishlistItems },
     dispatch
   } = useCart();
 
   function toggleBtnText(product) {
-    const result = checkIfAlreadyPresent(cartItems, product.id);
+    const result = checkIfAlreadyPresent(cartItems, product._id);
     return result && result.existsInCart ? "Go to Cart" : "Add to Cart";
   }
   function toggleHeartColor(product) {
-    const result = checkIfAlreadyPresent(wishlistItems, product.id);
+    const result = checkIfAlreadyPresent(wishlistItems, product._id);
     return result && result.existsInWishlist ? "salmon" : "grey";
   }
   return (
-    <div key={product.id} className={product.inStock?"image-card-wrapper":"image-card-wrapper no-hover"}>
+    <div
+      key={product._id}
+      className={
+        product.inStock ? "image-card-wrapper" : "image-card-wrapper no-hover"
+      }
+    >
       <div className="card-image">
         <img src={product.image} alt="..." />
 
-        {(product.fastDelivery && product.inStock) && (
+        {product.fastDelivery && product.inStock && (
           <span className="badge-success">Fast-Delivery</span>
         )}
-        { !product.inStock && (
+        {!product.inStock && (
           <span className="badge-neutral">Out of Stock</span>
         )}
       </div>
@@ -49,7 +56,16 @@ const [isDisabled,setIsDisabled]=useState(false);
         <p className="strong relative-positioned">
           {product.brand}
           <button
-            onClick={() => wishlistHandler(wishlistItems, dispatch, product,showToast,setIsDisabled,isRendered)}
+            onClick={() =>
+              wishlistHandler(
+                wishlistItems,
+                dispatch,
+                product,
+                showToast,
+                setIsDisabled,
+                isRendered
+              )
+            }
             className="btn-icon add-to-wishlist-btn "
           >
             <i
@@ -60,14 +76,26 @@ const [isDisabled,setIsDisabled]=useState(false);
         </p>
         <p className="offer-wrapper">
           <span className="strong">
-            Rs{getFinalPrice(product.price, product.offer)}
+            Rs{getFinalPrice(product.price, product.discount)}
           </span>
           <span className="line-through small">Rs{product.price} </span>
-          <span className="discount">{product.offer}% OFF</span>
+          <span className="discount">{product.discount}% OFF</span>
         </p>
         <button
           disabled={!product.inStock || isDisabled}
-          onClick={() => addToCartHandler(cartItems, dispatch, product,showToast,setIsDisabled,isRendered)}
+          onClick={() => {
+            const result = checkIfAlreadyPresent(cartItems, product._id);
+            !result?.existsInCart
+              ? addToCartHandler(
+                  cartItems,
+                  dispatch,
+                  product,
+                  showToast,
+                  setIsDisabled,
+                  isRendered
+                )
+              : navigate("/cart");
+          }}
           className={
             product.inStock
               ? "btn btn-primary add-to-cart-btn"
