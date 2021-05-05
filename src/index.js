@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import { CartProvider, ToastProvider } from "./Contexts";
+import { CartProvider, ToastProvider, AuthProvider } from "./Contexts";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 
@@ -10,7 +10,9 @@ ReactDOM.render(
     <Router>
       <CartProvider>
         <ToastProvider>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </ToastProvider>
       </CartProvider>
     </Router>

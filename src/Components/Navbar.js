@@ -1,4 +1,4 @@
-import { useCart } from "../Contexts";
+import { useCart, useAuth } from "../Contexts";
 import { Searchbar } from "./Searchbar";
 import { Link, NavLink } from "react-router-dom";
 export const Navbar = ({ searchText, setSearchText }) => {
@@ -6,6 +6,7 @@ export const Navbar = ({ searchText, setSearchText }) => {
     state: { cartItems },
     dispatch
   } = useCart();
+  const { isLoggedIn, logoutHandler } = useAuth();
 
   function totalCartItems(cartItems) {
     const result = cartItems.filter((item) => item.existsInCart);
@@ -22,7 +23,11 @@ export const Navbar = ({ searchText, setSearchText }) => {
           </Link>
           <div className="list-centered">
             <ul className="list-items-flex list-non-bullet" id="list-addon-3">
-              <NavLink to="productsListingPage" className="styled" activeClassName="active-page">
+              <NavLink
+                to="productsListingPage"
+                className="styled"
+                activeClassName="active-page"
+              >
                 <li className="all-products">Products</li>
               </NavLink>
             </ul>
@@ -51,6 +56,16 @@ export const Navbar = ({ searchText, setSearchText }) => {
                     {totalCartItems(cartItems)}
                   </span>
                   <i className="fas fa-shopping-cart"></i>
+                </button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/login">
+                <button
+                  onClick={() => logoutHandler()}
+                  className="btn btn-outline-primary"
+                >
+                  {isLoggedIn ? "Logout" : "Login"}
                 </button>
               </Link>
             </li>
