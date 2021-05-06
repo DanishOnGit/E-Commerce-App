@@ -163,6 +163,45 @@
   }
 }
 
+/* Product page */
+.product-wrapper {
+  width: 95vw;
+  height: 12rem;
+}
+.text-deco {
+  text-decoration: none;
+  color: var(--black-color);
+}
+.product-image-wrapper {
+  flex: 1;
+}
+.product-image-wrapper img {
+  height: 100%;
+}
+.product-details-wrapper-card {
+  text-align: left;
+  margin-top: 0.5rem;
+  flex: 1;
+}
+.mg-top {
+  margin: 1rem 0;
+}
+.min-width {
+  width: 8rem;
+}
+.product-details-wrapper-card > * {
+  margin: 0.5rem 0;
+}
+
+@media screen and (min-width: 556px) {
+  .product-wrapper {
+    width: 60vw;
+    height: 23rem;
+    margin: auto;
+    display: flex;
+  }
+}
+
 /* Wishlist page */
 .image-card-wrapper {
   text-align: left;
