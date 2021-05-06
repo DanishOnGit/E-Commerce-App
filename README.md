@@ -1,4 +1,4 @@
-# E-COMMERCE APP
+# Welcome to [Shuttle-Shop](https://shuttle-shop.netlify.app/), an E-commerce app !
 ## Frontend Features:
 * Auth on frontend
 * Product listing page
