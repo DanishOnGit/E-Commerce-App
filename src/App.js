@@ -7,6 +7,7 @@ import {
   Navbar,
   Homepage,
   ProductsListingPage,
+  ProductPage,
   Login,
   Signup,
   PageNotFound,
@@ -95,8 +96,10 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <PrivateRoute path="/cart" element={<Cart />} />
         <PrivateRoute path="/wishlist" element={<Wishlist />} />
-        {/* <Route path="cart" element={<Cart />} />
-        <Route path="wishlist" element={<Wishlist />} /> */}
+        <Route
+          path="/productsListingPage/product/:itemId"
+          element={<ProductPage />}
+        />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </div>

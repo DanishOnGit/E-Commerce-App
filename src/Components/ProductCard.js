@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCart, useToast } from "../Contexts";
 import {
   wishlistHandler,
@@ -42,19 +42,25 @@ export function ProductCard({ product }) {
         product.inStock ? "image-card-wrapper" : "image-card-wrapper no-hover"
       }
     >
-      <div className="card-image">
-        <img src={product.image} alt="..." />
+      <Link
+        to={`/productsListingPage/product/${product._id}`}
+        className="text-deco"
+      >
+        {" "}
+        <div className="card-image">
+          <img src={product.image} alt="..." />
 
-        {product.fastDelivery && product.inStock && (
-          <span className="badge-success">Fast-Delivery</span>
-        )}
-        {!product.inStock && (
-          <span className="badge-neutral">Out of Stock</span>
-        )}
-      </div>
+          {product.fastDelivery && product.inStock && (
+            <span className="badge-success">Fast-Delivery</span>
+          )}
+          {!product.inStock && (
+            <span className="badge-neutral">Out of Stock</span>
+          )}
+        </div>
+      </Link>
       <div className="product-details-wrapper">
         <p className="strong relative-positioned">
-          {product.brand}
+          {product.brand}{" "}
           <button
             onClick={() =>
               wishlistHandler(

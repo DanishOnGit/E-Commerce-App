@@ -1,6 +1,7 @@
 export { Navbar } from "./Navbar";
 export { Searchbar } from "./Searchbar";
 export { ProductsListingPage } from "./ProductsListingPage";
+export { ProductPage } from "./ProductPage";
 export { Cart } from "./Cart";
 export { Checkout } from "./Checkout";
 export { Wishlist } from "./Wishlist";
