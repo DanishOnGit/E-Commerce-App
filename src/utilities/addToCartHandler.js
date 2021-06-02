@@ -1,5 +1,6 @@
 import axios from "axios";
 import { checkIfAlreadyPresent } from "../utilities";
+import { API_URL } from "./apiurl";
 
 export async function addToCartHandler(
   cartItems,
@@ -15,20 +16,17 @@ export async function addToCartHandler(
     const returnedValue = checkIfAlreadyPresent(cartItems, item._id);
 
     if (!returnedValue) {
-      const response = await axios.post(
-        "https://Badminton-ecomm.danishahmed27.repl.co/cart",
-        {
-          _id: item._id,
-          cartQuantity: 1,
-          existsInCart: true
-        }
-      );
+      const response = await axios.post(`${API_URL}/cart`, {
+        _id: item._id,
+        cartQuantity: 1,
+        existsInCart: true,
+      });
 
       if (response.status === 201) {
         showToast(`Added!`, "success");
         dispatch({
           type: "GET_CART_ITEMS",
-          payload: response.data.cartItem.cartItems
+          payload: response.data.cartItems,
         });
       }
     } else {
@@ -36,25 +34,25 @@ export async function addToCartHandler(
         dispatch({ type: "SET_ROUTE", payload: "cart" });
       } else {
         const response = await axios.post(
-          `https://Badminton-ecomm.danishahmed27.repl.co/cart`,
+          `${API_URL}/cart`,
 
           {
             _id: item._id,
             cartQuantity: 1,
-            existsInCart: true
+            existsInCart: true,
           }
         );
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           dispatch({
             type: "GET_CART_ITEMS",
-            payload: response.data.cartItem.cartItems
+            payload: response.data.cartItems,
           });
         }
       }
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     showToast(`Could not add ${item.brand} to cart!`, "failure");
   } finally {
     if (isRendered) {

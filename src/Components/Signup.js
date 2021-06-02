@@ -1,34 +1,60 @@
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Users } from "../Users";
+import { API_URL } from "../utilities";
 export function Signup() {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inputType, setInputType] = useState("password");
-
-  function navigationHandler() {
-    Users.push({ username: userName, password: password });
-    navigate("/login");
-  }
+  const [userName, setUserName] = useState("");
 
   function showHidePassword() {
     inputType === "password" ? setInputType("text") : setInputType("password");
   }
 
+  const createUser = async (e) => {
+    try {
+      e.preventDefault();
+      const res = await axios({
+        method: "POST",
+        url: `${API_URL}/users-ecomm`,
+        data: {
+          name: userName,
+          email: userEmail,
+          password: password,
+        },
+      });
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <form className="login-form">
+    <form className="login-form" onSubmit={createUser}>
       <h2 className="login-form__heading">Signup</h2>
 
       <div className="login-form__fields-wrapper">
-        <label>Username</label>
+        <label>userName</label>
         <div className="input-field-wrapper">
           <input
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             className="username-input"
             type="text"
-            placeholder="Username"
+            placeholder="Name"
+          />
+        </div>
+        <br />
+        <label>userEmail</label>
+        <div className="input-field-wrapper">
+          <input
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            className="username-input"
+            type="text"
+            placeholder="Email"
           />
         </div>
         <br />
@@ -59,10 +85,7 @@ export function Signup() {
           />
         </div>
 
-        <button onClick={navigationHandler} className="btn btn-primary stretch">
-          {" "}
-          Signup{" "}
-        </button>
+        <button className="btn btn-primary stretch"> Signup </button>
       </div>
     </form>
   );

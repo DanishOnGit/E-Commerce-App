@@ -57,7 +57,7 @@ export function Wishlist() {
                   <img src={item.image} alt="..." />
                   <button
                     onClick={() =>
-                      wishlistHandler(wishlistItems, dispatch, item)
+                      wishlistHandler(wishlistItems, dispatch, item,showToast,setIsDisabled,isRendered)
                     }
                     className="btn btn-secondary remove-btn"
                   >

@@ -5,7 +5,7 @@ import {
   wishlistHandler,
   addToCartHandler,
   checkIfAlreadyPresent,
-  getFinalPrice
+  getFinalPrice,
 } from "../utilities";
 export function ProductCard({ product }) {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export function ProductCard({ product }) {
   const { showToast } = useToast();
   const {
     state: { cartItems, wishlistItems },
-    dispatch
+    dispatch,
   } = useCart();
 
   function toggleBtnText(product) {

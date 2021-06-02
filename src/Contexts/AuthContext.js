@@ -1,40 +1,75 @@
 import { createContext, useEffect, useState, useContext } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Users } from "../Users";
+
+import {
+  API_URL,
+  setupAuthExceptionHandler,
+  setupAuthHeaderForServiceCalls,
+} from "../utilities";
+
 import { useToast } from "./ToastContext";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = JSON.parse(localStorage?.getItem("userToken")) || {
+    authToken: null,
+  };
+
+  const [userToken, setUserToken] = useState(token?.authToken);
+
   const navigate = useNavigate();
   const { showToast } = useToast();
+
   useEffect(() => {
-    const result = JSON.parse(localStorage?.getItem("login"));
-    result?.loginStatus && setIsLoggedIn(true);
+    setupAuthExceptionHandler(logoutUser, navigate);
   }, []);
 
-  function loginWithCredentials(username, password) {
-    const result = Users.find((user) => user.username === username);
-    if (result?.password === password) {
-      setIsLoggedIn(true);
-      showToast("Login successfull !", "success");
-      localStorage?.setItem("login", JSON.stringify({ loginStatus: true }));
-      return true;
-    } else {
-      showToast("Incorrect details ! Plz try again", "failure");
+  async function loginWithCredentials(email, password) {
+    try {
+      const {
+        data: { token },
+        status,
+      } = await axios({
+        method: "POST",
+        url: `${API_URL}/users-ecomm/authenticate`,
+        headers: { email: email, password: password },
+      });
+
+      if (status === 200) {
+        setUserToken(token);
+        setupAuthHeaderForServiceCalls(token);
+        showToast("Login successfull !", "success");
+
+        localStorage?.setItem(
+          "userToken",
+          JSON.stringify({ authToken: userToken })
+        );
+
+        return true;
+      } else {
+        showToast("Incorrect details ! Plz try again", "failure");
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  function logoutHandler() {
-    localStorage?.removeItem("login");
-    setIsLoggedIn(false);
-    navigate("/");
+  function logoutUser() {
+    localStorage?.removeItem("userToken");
+    setUserToken(null);
+    setupAuthHeaderForServiceCalls(null);
+    navigate("/login");
   }
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, loginWithCredentials, logoutHandler }}
+      value={{
+        loginWithCredentials,
+        logoutUser,
+        userToken,
+      }}
     >
       {children}
     </AuthContext.Provider>

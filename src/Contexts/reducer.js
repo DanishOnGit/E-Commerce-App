@@ -17,7 +17,7 @@ export function reducer(state, action) {
     case "PRICE_LOW_TO_HIGH":
       return {
         ...state,
-        sortBy: "PRICE_LOW_TO_HIGH"
+        sortBy: "PRICE_LOW_TO_HIGH",
       };
     case "PRICE_HIGH_TO_LOW":
       return { ...state, sortBy: "PRICE_HIGH_TO_LOW" };
@@ -25,18 +25,18 @@ export function reducer(state, action) {
     case "PRICE_RANGE_SORT":
       return {
         ...state,
-        priceRangeControl: action.payload
+        priceRangeControl: action.payload,
       };
 
     case "IN_STOCK_ONLY":
       return {
         ...state,
-        showFullInventory: !state.showFullInventory
+        showFullInventory: !state.showFullInventory,
       };
     case "FAST_DELIVERY_ONLY":
       return {
         ...state,
-        showFastDeliveryOnly: !state.showFastDeliveryOnly
+        showFastDeliveryOnly: !state.showFastDeliveryOnly,
       };
     case "CLEAR_FILTERS":
       return {
@@ -44,7 +44,7 @@ export function reducer(state, action) {
         sortBy: null,
         priceRangeControl: 5000,
         showFastDeliveryOnly: false,
-        showFullInventory: true
+        showFullInventory: true,
       };
 
     default:

@@ -1,12 +1,13 @@
 import { useCart, useAuth } from "../Contexts";
 import { Searchbar } from "./Searchbar";
 import { Link, NavLink } from "react-router-dom";
+
 export const Navbar = ({ searchText, setSearchText }) => {
   const {
     state: { cartItems },
-    dispatch
+    dispatch,
   } = useCart();
-  const { isLoggedIn, logoutHandler } = useAuth();
+  const { userToken, logoutUser } = useAuth();
 
   function totalCartItems(cartItems) {
     const result = cartItems.filter((item) => item.existsInCart);
@@ -62,10 +63,10 @@ export const Navbar = ({ searchText, setSearchText }) => {
             <li>
               <Link to="/login">
                 <button
-                  onClick={() => logoutHandler()}
+                  onClick={() => logoutUser()}
                   className="btn btn-outline-primary"
                 >
-                  {isLoggedIn ? "Logout" : "Login"}
+                  {userToken ? "Logout" : "Login"}
                 </button>
               </Link>
             </li>

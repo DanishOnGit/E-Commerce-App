@@ -1,27 +1,31 @@
-import { createContext,useContext,useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-const ToastContext=createContext();
+const ToastContext = createContext();
 
-export function ToastProvider({children}){
-const [toggleToast,setToggleToast]=useState("none");
-const [message,setMessage]=useState("");
-const [toastType,setToastType]=useState("info")
+export function ToastProvider({ children }) {
+  const [toggleToast, setToggleToast] = useState("none");
+  const [message, setMessage] = useState("");
+  const [toastType, setToastType] = useState("info");
 
-function showToast(message,toastType){
-setToggleToast("block");
-setMessage(message)
-setToastType(toastType)
-}
-function hideToast(){
-setToggleToast("none")
-setMessage("")
-}
+  function showToast(message, toastType) {
+    setToggleToast("block");
+    setMessage(message);
+    setToastType(toastType);
+  }
+  function hideToast() {
+    setToggleToast("none");
+    setMessage("");
+  }
 
-  return <ToastContext.Provider value={{showToast,hideToast,toggleToast,message,toastType}}>
-    {children}
+  return (
+    <ToastContext.Provider
+      value={{ showToast, hideToast, toggleToast, message, toastType }}
+    >
+      {children}
     </ToastContext.Provider>
+  );
 }
 
-export function useToast(){
-return useContext(ToastContext);
+export function useToast() {
+  return useContext(ToastContext);
 }

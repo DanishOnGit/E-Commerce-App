@@ -6,7 +6,8 @@ import {
   wishlistHandler,
   addToCartHandler,
   getFinalPrice,
-  checkIfAlreadyPresent
+  checkIfAlreadyPresent,
+  API_URL,
 } from "../utilities";
 
 export const ProductPage = () => {
@@ -17,7 +18,7 @@ export const ProductPage = () => {
   const { showToast } = useToast();
   const {
     state: { cartItems, wishlistItems },
-    dispatch
+    dispatch,
   } = useCart();
 
   let isRendered = useRef(true);
@@ -34,12 +35,12 @@ export const ProductPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(
-          `https://Badminton-ecomm.danishahmed27.repl.co/productsListingPage/product/${itemId}`
+        const response = await axios.get(
+          `${API_URL}/productsListingPage/product/${itemId}`
         );
-        setProduct(res.data.product);
-      } catch (err) {
-        console.log("error occured while fetching page!", err);
+        setProduct(response.data.product);
+      } catch (error) {
+        console.log("error occured while fetching page!", error);
       }
     })();
   }, []);

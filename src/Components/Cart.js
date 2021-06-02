@@ -1,85 +1,92 @@
 import axios from "axios";
-import { useCart } from "../Contexts";
+import { useEffect, useRef, useState } from "react";
+import { useCart, useToast } from "../Contexts";
 import {
   wishlistHandler,
+  getFinalPrice,
+  API_URL,
   checkIfAlreadyPresent,
-  getFinalPrice
 } from "../utilities";
 
 export function Cart() {
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const {
     state: { cartItems, wishlistItems },
-    dispatch
+    dispatch,
   } = useCart();
+  const { showToast } = useToast();
+  let isRendered = useRef(true);
 
+  useEffect(() => {
+    isRendered.current = true;
+    return () => {
+      isRendered.current = false;
+    };
+  }, []);
   async function removeFromCartHandler(item) {
     try {
-      const response = await axios.post(
-        "https://Badminton-ecomm.danishahmed27.repl.co/cart",
+      const response = await axios.post(`${API_URL}/cart`, {
+        _id: item._id,
+        existsInCart: false,
+      });
 
-        {
-          _id: item._id,
-          existsInCart: false
-        }
-      );
-
-      if (response.status === 200) {
+      if (response.status === 201) {
         dispatch({
           type: "GET_CART_ITEMS",
-          payload: response.data.cartItem.cartItems
+          payload: response.data.cartItems,
         });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 
   function movetowishlist(item) {
     removeFromCartHandler(item);
-    const response = checkIfAlreadyPresent(wishlistItems, item._id);
-    if (!response) {
-      wishlistHandler(wishlistItems, dispatch, item);
-    } else if (response && response.existsInWishlist === false) {
-      wishlistHandler(wishlistItems, dispatch, item);
+    const result = checkIfAlreadyPresent(wishlistItems, item._id);
+    if (!result) {
+      wishlistHandler(
+        wishlistItems,
+        dispatch,
+        item,
+        showToast,
+        setIsDisabled,
+        isRendered
+      );
     }
   }
 
   async function increaseQuantityHandler(item, cartQuantity) {
     try {
-      const response = await axios.post(
-        `https://Badminton-ecomm.danishahmed27.repl.co/cart`,
-        {
-          _id: item._id,
-          cartQuantity: cartQuantity + 1
-        }
-      );
-      
+      const response = await axios.post(`${API_URL}/cart`, {
+        _id: item._id,
+        cartQuantity: cartQuantity + 1,
+      });
+
       dispatch({
         type: "GET_CART_ITEMS",
-        payload: response.data.cartItem.cartItems
+        payload: response.data.cartItems,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 
   async function decreaseQuantityHandler(item, cartQuantity) {
     try {
       if (cartQuantity > 1) {
-        const response = await axios.post(
-          `https://Badminton-ecomm.danishahmed27.repl.co/cart`,
-          {
-            _id: item._id,
-            cartQuantity: cartQuantity - 1
-          }
-        );
+        const response = await axios.post(`${API_URL}/cart`, {
+          _id: item._id,
+          cartQuantity: cartQuantity - 1,
+        });
         dispatch({
           type: "GET_CART_ITEMS",
-          payload: response.data.cartItem.cartItems
+          payload: response.data.cartItems,
         });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -119,7 +126,7 @@ export function Cart() {
     <>
       <h1 className="cart-header centered">Your Cart</h1>
 
-     {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
+      {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
       {filteredCartData.length !== 0 && (
         <div className="display-grid-2-2 cart-grid fixed-width">
           <div className="added-items-wrapper">
@@ -140,7 +147,7 @@ export function Cart() {
                       <p className="offer-wrapper">
                         <span>
                           Rs.{getFinalPrice(item.price, item.discount)}
-                        </span>{" "}
+                        </span>
                         <span className="line-through small">
                           Rs.{item.price}
                         </span>

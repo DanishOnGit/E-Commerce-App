@@ -1,10 +1,9 @@
 import { createContext, useContext, useReducer } from "react";
-import {reducer} from "./reducer"
+import { reducer } from "./reducer";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  
-  const initialState= {
+  const initialState = {
     showFullInventory: true,
     showFastDeliveryOnly: false,
     sortBy: null,
@@ -12,10 +11,9 @@ export function CartProvider({ children }) {
     productsList: [],
     cartItems: [],
     wishlistItems: [],
-   
-  }
- 
-  const [state, dispatch] = useReducer(reducer,initialState);
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <CartContext.Provider value={{ state, dispatch }}>

@@ -12,9 +12,11 @@ import {
   Signup,
   PageNotFound,
   Cart,
-  Wishlist
+  Wishlist,
 } from "./Components";
 import { useCart } from "./Contexts/CartContext";
+import { API_URL } from "./utilities";
+import { useAuth } from "./Contexts";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -23,18 +25,17 @@ export default function App() {
 
   const {
     state: { productsList },
-    dispatch
+    dispatch,
   } = useCart();
+
+  const { userToken } = useAuth();
 
   useEffect(() => {
     (async function () {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "https://Badminton-ecomm.danishahmed27.repl.co/productsListingPage"
-        );
+        const response = await axios.get(`${API_URL}/productsListingPage`);
         dispatch({ type: "GET_PRODUCTSLIST", payload: response.data.products });
-
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -42,35 +43,45 @@ export default function App() {
         console.log(err);
       }
     })();
-    (async function () {
-      try {
-        const response = await axios.get(
-          "https://Badminton-ecomm.danishahmed27.repl.co/wishlist"
-        );
+    if (userToken) {
+      (async function () {
+        try {
+          const response = await axios({
+            method: "GET",
+            url: `${API_URL}/wishlist`,
+            headers: {
+              userToken: userToken,
+            },
+          });
 
-        dispatch({
-          type: "GET_WISHLIST_ITEMS",
-          payload: response.data.wishlistItem1.wishlistItems
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-    (async function () {
-      try {
-        const response = await axios.get(
-          "https://Badminton-ecomm.danishahmed27.repl.co/cart"
-        );
+          dispatch({
+            type: "GET_WISHLIST_ITEMS",
+            payload: response.data.wishlistItems,
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+      (async function () {
+        try {
+          const response = await axios({
+            method: "GET",
+            url: `${API_URL}/cart`,
+            headers: {
+              userToken: userToken,
+            },
+          });
 
-        dispatch({
-          type: "GET_CART_ITEMS",
-          payload: response.data.cartItem1.cartItems
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+          dispatch({
+            type: "GET_CART_ITEMS",
+            payload: response.data.cartItems,
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [userToken]);
 
   return (
     <div className="App">

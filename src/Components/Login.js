@@ -6,7 +6,7 @@ import { useAuth } from "../Contexts";
 export function Login() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inputType, setInputType] = useState("password");
 
@@ -14,7 +14,7 @@ export function Login() {
 
   function loginHandler(e) {
     e.preventDefault();
-    const status = loginWithCredentials(userName, password);
+    const status = loginWithCredentials(userEmail, password);
     status && navigate(state?.from ? state.from : "/productsListingPage");
   }
 
@@ -29,14 +29,14 @@ export function Login() {
         <h2 className="login-form__heading">Login</h2>
 
         <div className="login-form__fields-wrapper">
-          <label>Username</label>
+          <label>UserEmail</label>
           <div className="input-field-wrapper">
             <input
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
               className="username-input"
               type="text"
-              placeholder="Username"
+              placeholder="Email"
               required
             />
           </div>
@@ -56,7 +56,7 @@ export function Login() {
               className="btn btn-secondary basic-addon-2"
               type="button"
             >
-              <i class="far fa-eye-slash"></i>
+              <i className="far fa-eye-slash"></i>
             </button>
           </div>
 

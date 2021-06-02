@@ -1,5 +1,6 @@
 import axios from "axios";
 import { checkIfAlreadyPresent } from "../utilities";
+import { API_URL } from "./apiurl";
 
 export async function wishlistHandler(
   wishlistItems,
@@ -11,12 +12,12 @@ export async function wishlistHandler(
 ) {
   try {
     const returnedValue = checkIfAlreadyPresent(wishlistItems, item._id);
-
+    
     if (!returnedValue) {
       showToast(`Adding ${item.brand} to wishlist...`, "info");
       setIsDisabled(true);
       const response = await axios.post(
-        "https://Badminton-ecomm.danishahmed27.repl.co/wishlist",
+        `${API_URL}/wishlist`,
         {
           _id: item._id
         }
@@ -26,27 +27,28 @@ export async function wishlistHandler(
         showToast(`Added!`, "success");
         dispatch({
           type: "GET_WISHLIST_ITEMS",
-          payload: response.data.wishlistItem.wishlistItems
+          payload: response.data.wishlistItems
         });
       }
-    } else {
+    }
+     else {
       const response = await axios.post(
-        `https://Badminton-ecomm.danishahmed27.repl.co/wishlist`,
+        `${API_URL}/wishlist`,
 
         {
           _id: item._id
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         dispatch({
           type: "GET_WISHLIST_ITEMS",
-          payload: response.data.wishlistItem.wishlistItems
+          payload: response.data.wishlistItems
         });
       }
     }
-  } catch (err) {
-    console.log("Wisholist post eror is...", err);
+  } catch (error) {
+    console.log(error);
     showToast(`Could not add ${item.brand} to wishlist!`, "failure");
   } finally {
     if (isRendered) {
