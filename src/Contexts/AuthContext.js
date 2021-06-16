@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import {
   API_URL,
   setupAuthExceptionHandler,
@@ -16,6 +15,7 @@ export function AuthProvider({ children }) {
   const token = JSON.parse(localStorage?.getItem("userToken")) || {
     authToken: null,
   };
+  setupAuthHeaderForServiceCalls(token?.authToken);
 
   const [userToken, setUserToken] = useState(token?.authToken);
 
@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
 
         localStorage?.setItem(
           "userToken",
-          JSON.stringify({ authToken: userToken })
+          JSON.stringify({ authToken: token })
         );
 
         return true;

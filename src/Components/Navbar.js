@@ -12,7 +12,7 @@ export const Navbar = ({ searchText, setSearchText }) => {
   function totalCartItems(cartItems) {
     const result = cartItems.filter((item) => item.existsInCart);
     const total = result.reduce((acc, cv) => acc + cv.cartQuantity, 0);
-    return total;
+    return userToken?total:0;
   }
 
   return (

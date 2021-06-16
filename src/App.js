@@ -35,6 +35,7 @@ export default function App() {
       try {
         setLoading(true);
         const response = await axios.get(`${API_URL}/productsListingPage`);
+        console.log("Appjs, detching product list",response)
         dispatch({ type: "GET_PRODUCTSLIST", payload: response.data.products });
         setLoading(false);
       } catch (err) {

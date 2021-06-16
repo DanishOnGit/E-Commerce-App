@@ -3,7 +3,7 @@ import axios from "axios";
 export function setupAuthHeaderForServiceCalls(token) {
   
     if (token) {
-      return (axios.defaults.headers.common["userToken"] = token);
+      return (axios.defaults.headers.common["Authorization"] = token);
     }
-    delete axios.defaults.headers.common["userToken"];
+    delete axios.defaults.headers.common["Authorization"];
   }
