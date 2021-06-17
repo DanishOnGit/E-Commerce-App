@@ -27,7 +27,6 @@ export function Login() {
       <Toast />
       <form className="login-form">
         <h2 className="login-form__heading">Login</h2>
-
         <div className="login-form__fields-wrapper">
           <label>UserEmail</label>
           <div className="input-field-wrapper">

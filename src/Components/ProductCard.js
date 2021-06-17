@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useCart, useToast } from "../Contexts";
+import { useAuth, useCart, useToast } from "../Contexts";
 import {
   wishlistHandler,
   addToCartHandler,
   checkIfAlreadyPresent,
   getFinalPrice,
 } from "../utilities";
+
 export function ProductCard({ product }) {
   const navigate = useNavigate();
-
+  const { userToken } = useAuth();
   let isRendered = useRef(true);
 
   useEffect(() => {
@@ -63,14 +64,16 @@ export function ProductCard({ product }) {
           {product.brand}{" "}
           <button
             onClick={() =>
-              wishlistHandler(
-                wishlistItems,
-                dispatch,
-                product,
-                showToast,
-                setIsDisabled,
-                isRendered
-              )
+              userToken
+                ? wishlistHandler(
+                    wishlistItems,
+                    dispatch,
+                    product,
+                    showToast,
+                    setIsDisabled,
+                    isRendered
+                  )
+                : showToast("Log in to perform this action", "failure")
             }
             className="btn-icon add-to-wishlist-btn "
           >
@@ -91,7 +94,7 @@ export function ProductCard({ product }) {
           disabled={!product.inStock || isDisabled}
           onClick={() => {
             const result = checkIfAlreadyPresent(cartItems, product._id);
-            !result?.existsInCart
+            !result?.existsInCart && userToken
               ? addToCartHandler(
                   cartItems,
                   dispatch,
