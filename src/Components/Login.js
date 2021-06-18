@@ -12,9 +12,10 @@ export function Login() {
 
   const { loginWithCredentials } = useAuth();
 
-  function loginHandler(e) {
+  async function loginHandler(e) {
     e.preventDefault();
-    const status = loginWithCredentials(userEmail, password);
+    const status =await  loginWithCredentials(userEmail, password);
+ 
     status && navigate(state?.from ? state.from : "/productsListingPage");
   }
 

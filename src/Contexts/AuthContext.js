@@ -46,7 +46,6 @@ export function AuthProvider({ children }) {
           "userToken",
           JSON.stringify({ authToken: token })
         );
-
         return true;
       } else {
         showToast("Incorrect details ! Plz try again", "failure");
