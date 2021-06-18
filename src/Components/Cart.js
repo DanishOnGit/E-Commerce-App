@@ -128,11 +128,11 @@ export function Cart() {
 
       {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
       {filteredCartData.length !== 0 && (
-        <div className="display-grid-2-2 cart-grid fixed-width" key={item._id}>
+        <div className="display-grid-2-2 cart-grid fixed-width">
           <div className="added-items-wrapper">
             {filteredCartData.map(({ cartQuantity, productId: item }) => {
               return (
-                <div className="outlined resized margin-bottom">
+                <div className="outlined resized margin-bottom" key={item._id}>
                   <div className="image-and-details-wrapper-cart">
                     <div className="card-image resized-image">
                       <img
