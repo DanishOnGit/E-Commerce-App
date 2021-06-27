@@ -1,7 +1,7 @@
 import { useCart, useAuth } from "../Contexts";
 import { Searchbar } from "./Searchbar";
 import { Link, NavLink } from "react-router-dom";
-
+import logo from "../images/logo-black.svg"
 export const Navbar = ({ searchText, setSearchText }) => {
   const {
     state: { cartItems },
@@ -20,7 +20,7 @@ export const Navbar = ({ searchText, setSearchText }) => {
       <nav className="nav-wrapper-3">
         <div className="logoAndList-wrapper">
           <Link to="/" className="styled">
-            <div className="brand">LOGO.</div>
+            <div className="brand"><img src={logo} alt="logo" height="80px" width="80px"/></div>
           </Link>
           <div className="list-centered">
             <ul className="list-items-flex list-non-bullet" id="list-addon-3">
