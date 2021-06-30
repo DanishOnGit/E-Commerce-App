@@ -94,7 +94,7 @@ export function CartItemCard({ cartQuantity, item }) {
     <div className="outlined resized margin-bottom" key={item._id}>
       <div className="image-and-details-wrapper-cart">
         <div className="card-image resized-image">
-          <img className="cart-card-image" src={item.image} alt="..." />
+          <img className="cart-card-image resized-card-image" src={item.image} alt="..." />
         </div>
         <div className="details-wrapper">
           <h4 className="brand">{item.brand}</h4>

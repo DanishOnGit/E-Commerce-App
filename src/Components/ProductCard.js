@@ -49,7 +49,7 @@ export function ProductCard({ product }) {
       >
         {" "}
         <div className="card-image">
-          <img src={product.image} alt="..." />
+          <img className="resized-card-image" src={product.image} alt="product-image" />
 
           {product.fastDelivery && product.inStock && (
             <span className="badge-success">Fast-Delivery</span>

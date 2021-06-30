@@ -53,7 +53,7 @@ export const ProductPage = () => {
   return (
     <div className="product-wrapper">
       <div className="product-image-wrapper">
-        <img src={product.image} alt="product-pic" />
+        <img src={product.image} alt="product-image" />
       </div>
       <div className="product-details-wrapper-card">
         <h2>{product.brand}</h2>
@@ -103,7 +103,7 @@ export const ProductPage = () => {
                 isRendered
               )
             }
-            className="btn btn-secondary mg-top"
+            className="btn btn-outline-secondary mg-top min-btn-width"
           >
             Add to Wishlist
           </button>

@@ -48,13 +48,13 @@ export function Wishlist() {
               key={item._id}
               className={
                 item.inStock
-                  ? "image-card-wrapper"
-                  : "image-card-wrapper no-hover"
+                  ? "image-card-wrapper wishlist-product-card"
+                  : "image-card-wrapper no-hover wishlist-product-card"
               }
             >
               <div className="product-details-wrapper">
                 <div className="card-image">
-                  <img src={item.image} alt="..." />
+                  <img className="resized-card-image" src={item.image} alt="product-image" />
                   <button
                     onClick={() =>
                       wishlistHandler(wishlistItems, dispatch, item,showToast,setIsDisabled,isRendered)
@@ -90,8 +90,8 @@ export function Wishlist() {
                 }}
                 className={
                   item.inStock
-                    ? "btn btn-outline-primary"
-                    : "btn btn-primary disabled"
+                    ? "btn btn-primary move-to-cart-btn"
+                    : "btn btn-primary disabled move-to-cart-btn"
                 }
               >
                 Move to cart
