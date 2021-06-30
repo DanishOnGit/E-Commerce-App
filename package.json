@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@paypal/react-paypal-js": "^7.1.0",
     "axios": "0.21.1",
     "faker": "5.5.0",
     "history": "5.0.0",

@@ -51,7 +51,7 @@ export async function wishlistHandler(
     console.log(error);
     showToast(`Could not add ${item.brand} to wishlist!`, "failure");
   } finally {
-    if (isRendered) {
+    if (isRendered.current) {
       setIsDisabled(false);
     }
   }

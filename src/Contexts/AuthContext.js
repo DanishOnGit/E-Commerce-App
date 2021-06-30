@@ -12,13 +12,14 @@ import { useToast } from "./ToastContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+
   const token = JSON.parse(localStorage?.getItem("userToken")) || {
     authToken: null,
   };
   setupAuthHeaderForServiceCalls(token?.authToken);
 
   const [userToken, setUserToken] = useState(token?.authToken);
-
+  
   const navigate = useNavigate();
   const { showToast } = useToast();
 

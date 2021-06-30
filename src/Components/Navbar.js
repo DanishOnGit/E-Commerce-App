@@ -2,7 +2,7 @@ import { useCart, useAuth } from "../Contexts";
 import { Searchbar } from "./Searchbar";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../images/logo-black.svg"
-export const Navbar = ({ searchText, setSearchText }) => {
+export function Navbar  ({ searchText, setSearchText }) {
   const {
     state: { cartItems },
     dispatch,

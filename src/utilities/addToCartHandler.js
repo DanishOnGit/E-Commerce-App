@@ -55,7 +55,7 @@ export async function addToCartHandler(
     console.log(error);
     showToast(`Could not add ${item.brand} to cart!`, "failure");
   } finally {
-    if (isRendered) {
+    if (isRendered.current) {
       setIsDisabled(false);
     }
   }
