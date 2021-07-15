@@ -475,3 +475,11 @@ fieldset {
   right: 1rem;
   z-index: var(--z-index-99);
 }
+
+/* Order confirmation styling */
+.order-confirmation-wrapper{
+  padding: 2rem;
+}
+.order-confirmation-wrapper>*{
+  margin: 1rem 0
+}

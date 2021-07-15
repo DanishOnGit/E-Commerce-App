@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCart } from "../Contexts";
 import { CartItemCard } from "./CartItemCard";
+import { OrderConfirmation } from "./OrderConfirmation";
 import { OrderSummary } from "./OrderSummary";
 
 export function Cart() {
@@ -18,7 +19,7 @@ export function Cart() {
 
   return (
     <>
-      <h1 className="cart-header centered">Your Cart</h1>
+      {isOrderPlaced?<OrderConfirmation/>: <> <h1 className="cart-header centered">Your Cart</h1>
 
       {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
       {filteredCartData.length !== 0 && (
@@ -33,7 +34,7 @@ export function Cart() {
             setIsOrderPlaced={setIsOrderPlaced}
           />
         </div>
-      )}
+      )}</>}
     </>
   );
 }

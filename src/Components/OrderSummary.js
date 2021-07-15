@@ -1,27 +1,9 @@
-import { getFinalPrice } from "../utilities";
+import { useOrderSummary } from "../utilities";
 import { Checkout } from "./Checkout";
 
 export function OrderSummary({ filteredCartData,setIsOrderPlaced }) {
-    
-  function calculateTotalMrp(filteredCartData) {
-    return filteredCartData.reduce(
-      (total, item) => total + Number(item.productId.price) * item.cartQuantity,
-      0
-    );
-  }
-  const totalMrp = calculateTotalMrp(filteredCartData);
-
-  function calculateTotalCartAmount(filteredCartData) {
-    return filteredCartData.reduce(
-      (total, item) =>
-        total +
-        Number(getFinalPrice(item.productId.price, item.productId.discount)) *
-          item.cartQuantity,
-      0
-    );
-  }
-  const totalCartAmount = calculateTotalCartAmount(filteredCartData);
-
+  const {totalMrp,totalCartAmount}=useOrderSummary();
+ 
   function calculateTotalCartItems(filteredCartData) {
     return filteredCartData.reduce(
       (total, item) => total + item.cartQuantity,
@@ -54,7 +36,7 @@ export function OrderSummary({ filteredCartData,setIsOrderPlaced }) {
       </div>
       
       <Checkout
-        totalCartAmount={totalCartAmount}
+        key={totalCartAmount}
         setIsOrderPlaced={setIsOrderPlaced}
       />
     </div>

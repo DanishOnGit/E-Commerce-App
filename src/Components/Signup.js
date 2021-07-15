@@ -18,7 +18,7 @@ export function Signup() {
       e.preventDefault();
       const res = await axios({
         method: "POST",
-        url: `${API_URL}/users-ecomm`,
+        url: `${API_URL}/users`,
         data: {
           name: userName,
           email: userEmail,

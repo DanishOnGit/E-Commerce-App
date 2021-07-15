@@ -1,22 +1,23 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useCart } from "../Contexts";
+import { API_URL, useOrderSummary } from "../utilities";
 const CLIENT_ID = process.env.REACT_APP_CLIENTID;
 
-export function Checkout({ totalCartAmount, setIsOrderPlaced }) {
+export function Checkout({ setIsOrderPlaced }) {
+  const { totalMrp, totalCartAmount } = useOrderSummary();
 
-  const [totalValue, setTotalValue] = useState(totalCartAmount);
-
-  console.log({ totalCartAmount });
-
-  useEffect(() => setTotalValue(totalCartAmount), [totalCartAmount]);
+  const {
+    state: { cartItems },
+    dispatch,
+  } = useCart();
 
   function createOrderOnBtnClick(data, actions) {
-    console.log({ data, totalCartAmount },"totalValue is...",totalValue);
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: (totalValue * 0.01368).toFixed(2),
+            value: (totalCartAmount * 0.01368).toFixed(2),
           },
         },
       ],
@@ -26,7 +27,33 @@ export function Checkout({ totalCartAmount, setIsOrderPlaced }) {
   async function paymentSuccess(data, actions) {
     await actions.order.capture();
     setIsOrderPlaced(true);
-    console.log("Placed Orrder!!");
+
+    const orderItems = cartItems
+      .filter((item) => item.existsInCart === true)
+      .map(({ productId: { _id, price, discount }, cartQuantity }) => ({
+        productId: _id,
+        itemPriceDetails: { price, discount },
+        cartQuantity,
+      }));
+    try {
+      const { status } = await axios({
+        method: "POST",
+        url: `${API_URL}/orders`,
+        data: {
+          orderItems: orderItems,
+          orderPriceDetails: {
+            totalMrp,
+            totalDiscount: totalMrp - totalCartAmount,
+            toBePaid: totalCartAmount,
+          },
+        },
+      });
+      if (status === 201) {
+        dispatch({ type: "GET_CART_ITEMS", payload: [] });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   function paymentFailure(data) {
     console.log("payment failed!", { data });

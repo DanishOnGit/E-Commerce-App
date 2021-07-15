@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
         status,
       } = await axios({
         method: "POST",
-        url: `${API_URL}/users-ecomm/authenticate`,
+        url: `${API_URL}/users/authenticate`,
         headers: { email: email, password: password },
       });
 
