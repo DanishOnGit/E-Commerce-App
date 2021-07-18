@@ -12,7 +12,7 @@ export function Login() {
 
   const { loginWithCredentials } = useAuth();
 
-  async function loginHandler(e) {
+  async function loginHandler(e,userEmail,password) {
     e.preventDefault();
     const status =await  loginWithCredentials(userEmail, password);
  
@@ -62,7 +62,7 @@ export function Login() {
 
           <button
             type="submit"
-            onClick={loginHandler}
+            onClick={(e)=>loginHandler(e,userEmail,password)}
             className="btn btn-primary stretch"
           >
             {" "}
@@ -76,6 +76,7 @@ export function Login() {
             </span>
           </p>
         </div>
+        <button  className="btn btn-primary stretch" onClick={(e)=>{e.preventDefault() ;setUserEmail("tester@gmail.com");setPassword("Tester@123");loginHandler(e,"tester@gmail.com","Tester@123")}}>Use Guest Credentials</button>
       </form>
     </div>
   );

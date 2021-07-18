@@ -426,6 +426,7 @@ fieldset {
 /* Login form styling */
 
 .login-form {
+  max-width: 30rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -466,6 +467,9 @@ fieldset {
 .plain-input {
   border: 1px solid var(--grey-color);
   border-radius: 4px;
+}
+.form-error{
+  color: var(--red-color);
 }
 
 /* Toast styling */

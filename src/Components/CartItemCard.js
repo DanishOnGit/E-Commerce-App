@@ -96,14 +96,15 @@ export function CartItemCard({ cartQuantity, item }) {
         <div className="card-image resized-image">
           <img className="cart-card-image resized-card-image" src={item.image} alt="..." />
         </div>
-        <div className="details-wrapper">
+        <div className="details-wrapper" style={{display:"flex",flexDirection:"column",alignSelf:"stretch"}}>
           <h4 className="brand">{item.brand}</h4>
-          <p className="description">Carbon and blah blha blha..</p>
-          <p className="offer-wrapper">
+          <p className="description">{item.description}</p>
+          <p className="offer-wrapper" style={{flexGrow:2}}>
             <span>Rs.{getFinalPrice(item.price, item.discount)}</span>
             <span className="line-through small">Rs.{item.price}</span>
             <span className="discount">{item.discount}% OFF</span>
           </p>
+          <div >
           <button
             onClick={() => decreaseQuantityHandler(item, cartQuantity)}
             className="btn btn-secondary decrease"
@@ -117,6 +118,7 @@ export function CartItemCard({ cartQuantity, item }) {
           >
             +
           </button>
+          </div>
         </div>
       </div>
       <div className="cta-wrapper">
