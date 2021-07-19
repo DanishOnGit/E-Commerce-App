@@ -76,7 +76,7 @@ export function Login() {
             </span>
           </p>
         </div>
-        <p style={{margin:"0.5rem 0"}}>------------OR-------------</p>
+        <p style={{margin:"0.5rem 0",textAlign:"center"}}>--------OR---------</p>
         <button  className="btn btn-outline-primary stretch" style={{borderWidth:"1px",marginTop:"0.5rem"}} onClick={(e)=>{e.preventDefault() ;setUserEmail("tester@gmail.com");setPassword("Tester@123");loginHandler(e,"tester@gmail.com","Tester@123")}}>Use Test Credentials</button>
       </form>
     </div>
