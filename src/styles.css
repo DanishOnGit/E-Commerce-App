@@ -267,10 +267,11 @@ fieldset {
     justify-content: flex-start;
     align-items: flex-start;
   }
-}
-.list-non-bullet {
-  text-align: left;
-  margin-left: 1.5rem;
+  .list-non-bullet,.filter-heading{
+    text-align: left;
+    margin-left: 1.5rem;
+  }
+  
 }
 
 /* Homepage styles */

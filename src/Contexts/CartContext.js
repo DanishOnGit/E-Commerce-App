@@ -7,6 +7,7 @@ export function CartProvider({ children }) {
     showFullInventory: true,
     showFastDeliveryOnly: false,
     sortBy: null,
+    filterBy:{categories:[]},
     priceRangeControl: 5000,
     productsList: [],
     cartItems: [],

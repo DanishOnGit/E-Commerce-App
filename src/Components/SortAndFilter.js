@@ -2,10 +2,10 @@ import { useCart } from "../Contexts";
 
 export function SortAndFilter() {
   const {
-    state: { showFullInventory, showFastDeliveryOnly, sortBy,priceRangeControl },
+    state: { showFullInventory, showFastDeliveryOnly, sortBy,priceRangeControl,filterBy },
     dispatch
   } = useCart();
-
+const categories=["racket","shoes","bags"]
   return (
     <div className="sort-filter-wrapper">
       <fieldset>
@@ -59,6 +59,7 @@ export function SortAndFilter() {
 
       <fieldset>
         <legend>Filters:</legend>
+        <h4 className="filter-heading">Availability</h4>
         <ul className="list-non-bullet">
           <li>
           <label>
@@ -81,7 +82,24 @@ export function SortAndFilter() {
         </label>
           </li>
         </ul>
-        
+        <h4 className="filter-heading">Category</h4>
+        <ul className="list-non-bullet">
+          {categories.map((category) => (
+            <li>
+              <label>
+                <input
+                  onChange={() =>
+                    dispatch({ type: "FILTER_BY_CATEGORY", payload: category })
+                  }
+                  type="checkbox"
+                  checked={filterBy.categories.includes(category)}
+                /> 
+                {category}
+              </label>
+            </li>
+          ))}
+          
+        </ul>
       </fieldset>
       <br/>
       <button className="btn btn-link" onClick={() => dispatch({ type: "CLEAR_FILTERS" })}>

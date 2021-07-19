@@ -38,6 +38,20 @@ export function reducer(state, action) {
         ...state,
         showFastDeliveryOnly: !state.showFastDeliveryOnly,
       };
+      case "FILTER_BY_CATEGORY": {
+        let newcategoryArr;
+        if (state.filterBy.categories.includes(action.payload)) {
+          newcategoryArr = state.filterBy.categories.filter(
+            (category) => category !== action.payload
+          );
+        } else {
+          newcategoryArr = [...state.filterBy.categories, action.payload];
+        }
+      return {
+        ...state,
+        filterBy: { ...state.filterBy, categories:newcategoryArr },
+      };
+    }
     case "CLEAR_FILTERS":
       return {
         ...state,

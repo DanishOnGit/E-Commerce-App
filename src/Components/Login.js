@@ -36,7 +36,7 @@ export function Login() {
               onChange={(e) => setUserEmail(e.target.value)}
               className="username-input"
               type="text"
-              placeholder="Enter Email"
+              placeholder="john@example.com"
               required
             />
           </div>

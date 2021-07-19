@@ -9,7 +9,8 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
       showFullInventory,
       showFastDeliveryOnly,
       sortBy,
-      priceRangeControl
+      priceRangeControl,
+      filterBy
     }
   } = useCart();
 
@@ -55,8 +56,9 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
     return productList
       .filter((item) => (showFullInventory ? true : item.inStock))
       .filter((item) => (showFastDeliveryOnly ? item.fastDelivery : true))
+      .filter(item=>(filterBy.categories.length!==0 ? filterBy.categories.includes(item.category):true))
       .filter((item) => item.price <= Number(priceRangeControl))
-      .filter((item) => (searchText ? item.brand.includes(searchText.charAt(0).toUpperCase()) : item));
+      .filter((item) => (searchText ? ((item.brand.includes(searchText.charAt(0).toUpperCase()))||(item.category.includes(searchText))) : item));
   }
 
   const sortedData = getSortedData(productsList, sortBy);
