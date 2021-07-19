@@ -5,7 +5,7 @@ export function SortAndFilter() {
     state: { showFullInventory, showFastDeliveryOnly, sortBy,priceRangeControl,filterBy },
     dispatch
   } = useCart();
-const categories=["racket","shoes","bags"]
+const categories=["Racket","Shoes","Bags"]
   return (
     <div className="sort-filter-wrapper">
       <fieldset>
@@ -89,10 +89,10 @@ const categories=["racket","shoes","bags"]
               <label>
                 <input
                   onChange={() =>
-                    dispatch({ type: "FILTER_BY_CATEGORY", payload: category })
+                    dispatch({ type: "FILTER_BY_CATEGORY", payload: category.toLowerCase() })
                   }
                   type="checkbox"
-                  checked={filterBy.categories.includes(category)}
+                  checked={filterBy.categories.includes(category.toLowerCase())}
                 /> 
                 {category}
               </label>
