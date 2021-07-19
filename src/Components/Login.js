@@ -29,14 +29,14 @@ export function Login() {
       <form className="login-form">
         <h2 className="login-form__heading">Login</h2>
         <div className="login-form__fields-wrapper">
-          <label>UserEmail</label>
+          <label>Email</label>
           <div className="input-field-wrapper">
             <input
               value={userEmail}
               onChange={(e) => setUserEmail(e.target.value)}
               className="username-input"
               type="text"
-              placeholder="Email"
+              placeholder="Enter Email"
               required
             />
           </div>
@@ -76,7 +76,8 @@ export function Login() {
             </span>
           </p>
         </div>
-        <button  className="btn btn-primary stretch" onClick={(e)=>{e.preventDefault() ;setUserEmail("tester@gmail.com");setPassword("Tester@123");loginHandler(e,"tester@gmail.com","Tester@123")}}>Use Guest Credentials</button>
+        <p style={{margin:"0.5rem 0"}}>------------OR-------------</p>
+        <button  className="btn btn-outline-primary stretch" style={{borderWidth:"1px",marginTop:"0.5rem"}} onClick={(e)=>{e.preventDefault() ;setUserEmail("tester@gmail.com");setPassword("Tester@123");loginHandler(e,"tester@gmail.com","Tester@123")}}>Use Test Credentials</button>
       </form>
     </div>
   );

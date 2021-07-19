@@ -77,7 +77,7 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
     <div>
       <Toast />
       <h1 className="product-listing-page-header centered">
-        All Products {totalNumberOfProducts(productsList)}
+        All Products ({totalNumberOfProducts(productsList)})
       </h1>
       <div className="product-listing-page-wrapper">
         <SortAndFilter />

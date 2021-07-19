@@ -182,7 +182,8 @@ export function Signup() {
         {errorState.matchPasswordError && (
             <small className="form-error">{errorState.matchPasswordError}</small>
           )}
-
+          <br/>
+       
         <button className="btn btn-primary stretch"> Signup </button>
       </div>
     </form>
