@@ -7,7 +7,7 @@ export function SortAndFilter() {
   } = useCart();
 const categories=["Racket","Shoes","Bags"]
   return (
-    <div className="sort-filter-wrapper">
+    <div className="sort-filter-wrapper mobile-sort-filter">
       <fieldset>
         <legend>Sort BY:</legend>
         <ul className="list-non-bullet">

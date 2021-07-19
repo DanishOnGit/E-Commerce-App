@@ -2,8 +2,9 @@ import { useCart } from "../Contexts";
 import { SortAndFilter } from "./SortAndFilter";
 import { Toast } from "./Toast";
 import { ProductCard } from "./ProductCard";
+import { Searchbar } from "./Searchbar";
 
-export const ProductsListingPage = ({ productsList, searchText }) => {
+export const ProductsListingPage = ({ productsList, searchText,setSearchText }) => {
   const {
     state: {
       showFullInventory,
@@ -78,6 +79,7 @@ export const ProductsListingPage = ({ productsList, searchText }) => {
   return (
     <div>
       <Toast />
+      {/* <Searchbar searchText={searchText} setSearchText={setSearchText} /> */}
       <h1 className="product-listing-page-header centered">
         All Products ({totalNumberOfProducts(productsList)})
       </h1>
