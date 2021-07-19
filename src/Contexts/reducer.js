@@ -56,6 +56,7 @@ export function reducer(state, action) {
       return {
         ...state,
         sortBy: null,
+        filterBy:{categories:[]},
         priceRangeControl: 5000,
         showFastDeliveryOnly: false,
         showFullInventory: true,
