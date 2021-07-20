@@ -71,8 +71,9 @@ padding: 1rem;
 }
 .search-wrapper.mobile-search{
   position: absolute;
-  top: 6.5rem;
-  left: 6rem;
+  width: 70vw;
+  top: 12%;
+  left: 15%;
   z-index: var(--z-index-99);
 }
 .nav-wrapper-3 .search-wrapper{
