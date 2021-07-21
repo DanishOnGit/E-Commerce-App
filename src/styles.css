@@ -301,8 +301,15 @@ fieldset {
 }
 @media screen and (max-width: 556px) {
   .mobile-sort-filter {
-    /* display: none; */
-    padding: 0 0.25rem;
+    
+    position: fixed;
+    bottom: 1.8rem;
+    transform: translateX(100%);
+    transition: transform 0.5s ease;
+    z-index: 999;
+    background-color: var(--white-color);
+    width: 100vw;
+   height: calc(100vh - 2rem);
   }
   .mobile-sort-filter fieldset {
     padding: 0 0.35rem;
@@ -311,51 +318,45 @@ fieldset {
 }
 
 /* Mobile sort filter */
-.child-1,.child-2{
-  background-color: var(--white-color);
-  box-shadow: 0 0 1px 1px grey;
- padding: 0.3rem 0;
- 
-}
-
-.show-in-mobile {
-  width: 100%;
-  display: flex;
-  position: fixed;
-  bottom: -47%;
-  z-index: 99;
-}
-
-#check-sort,
-#check-filter {
+.checkbtn {
   display: none;
 }
-.sort-fieldset,
-.filters-fieldset {
-background-color: var(--white-color);
-  transition: transform 0.5s ease;
-  transform: translateY(100vh);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding: 0 0.5rem;
-  z-index: var(--z-index-99);
+#check{
+  display: none;
 }
-#check-sort:checked ~ .sort-fieldset {
-  transform: translateY(-29.6vh);
-}
-#check-filter:checked ~ .filters-fieldset {
-  transform: translateY(-50.9vh);
-}
-@media screen and (min-width: 556px) {
-  .show-in-mobile {
-    display: none;
+@media screen and (max-width: 556px) {
+  .mobile-view-filter {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    padding: 1rem;
+    width: 100vw;
+    background-color: var(--white-color);
+    text-align: left;
+    box-shadow: 0 0 1px 0 grey;
   }
-  .checkbtn-sort,
-  .checkbtn-filter {
+  .checkbtn {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    padding: 1rem;
+    width: 100vw;
+    background-color: var(--white-color);
+    border-top: 2px solid black;
+    z-index: 999;
+  }
+
+  #check {
     display: none;
+   
+  }
+  #check:checked ~ .mobile-sort-filter {
+    transition: transform 0.5s ease;
+    transform: translateX(-100%);
   }
 }
+
+
 /* Homepage styles */
 .home-page-wrapper {
   position: relative;

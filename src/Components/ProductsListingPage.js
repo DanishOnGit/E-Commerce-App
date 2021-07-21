@@ -2,18 +2,20 @@ import { useCart } from "../Contexts";
 import { SortAndFilter } from "./SortAndFilter";
 import { Toast } from "./Toast";
 import { ProductCard } from "./ProductCard";
-import { Searchbar } from "./Searchbar";
-import { SortAndFilterMobile } from "./SortAndFilterMobile";
 
-export const ProductsListingPage = ({ productsList, searchText,setSearchText }) => {
+export const ProductsListingPage = ({
+  productsList,
+  searchText,
+  setSearchText,
+}) => {
   const {
     state: {
       showFullInventory,
       showFastDeliveryOnly,
       sortBy,
       priceRangeControl,
-      filterBy
-    }
+      filterBy,
+    },
   } = useCart();
 
   function getSortedData(productList, sortBy) {
@@ -58,9 +60,18 @@ export const ProductsListingPage = ({ productsList, searchText,setSearchText }) 
     return productList
       .filter((item) => (showFullInventory ? true : item.inStock))
       .filter((item) => (showFastDeliveryOnly ? item.fastDelivery : true))
-      .filter(item=>(filterBy.categories.length!==0 ? filterBy.categories.includes(item.category):true))
+      .filter((item) =>
+        filterBy.categories.length !== 0
+          ? filterBy.categories.includes(item.category)
+          : true
+      )
       .filter((item) => item.price <= Number(priceRangeControl))
-      .filter((item) => (searchText ? ((item.brand.includes(searchText.charAt(0).toUpperCase()))||(item.category.includes(searchText))) : item));
+      .filter((item) =>
+        searchText
+          ? item.brand.includes(searchText.charAt(0).toUpperCase()) ||
+            item.category.includes(searchText)
+          : item
+      );
   }
 
   const sortedData = getSortedData(productsList, sortBy);
@@ -73,20 +84,26 @@ export const ProductsListingPage = ({ productsList, searchText,setSearchText }) 
     searchText
   );
 
-  function totalNumberOfProducts(productsList) {
-    return productsList.length;
-  }
 
   return (
     <div>
       <Toast />
-     
+
       <h1 className="product-listing-page-header centered">
-        All Products ({totalNumberOfProducts(productsList)})
+        All Products
       </h1>
       <div className="product-listing-page-wrapper">
-        <SortAndFilter />
-        {/* <SortAndFilterMobile/> */}
+       
+        <label for="check" className="checkbtn">
+          <div>Filters</div>
+        </label>
+        <input type="checkbox" id="check" />
+
+        <div className="mobile-sort-filter">
+          {" "}
+          <SortAndFilter />
+        </div>
+      
         <div className="display-grid-2-2">
           {filteredData.map((product) => {
             return <ProductCard key={product._id} product={product} />;
