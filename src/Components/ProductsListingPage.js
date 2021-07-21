@@ -3,6 +3,7 @@ import { SortAndFilter } from "./SortAndFilter";
 import { Toast } from "./Toast";
 import { ProductCard } from "./ProductCard";
 import { Searchbar } from "./Searchbar";
+import { SortAndFilterMobile } from "./SortAndFilterMobile";
 
 export const ProductsListingPage = ({ productsList, searchText,setSearchText }) => {
   const {
@@ -79,12 +80,13 @@ export const ProductsListingPage = ({ productsList, searchText,setSearchText }) 
   return (
     <div>
       <Toast />
-      {/* <Searchbar searchText={searchText} setSearchText={setSearchText} /> */}
+     
       <h1 className="product-listing-page-header centered">
         All Products ({totalNumberOfProducts(productsList)})
       </h1>
       <div className="product-listing-page-wrapper">
         <SortAndFilter />
+        {/* <SortAndFilterMobile/> */}
         <div className="display-grid-2-2">
           {filteredData.map((product) => {
             return <ProductCard key={product._id} product={product} />;
