@@ -2,7 +2,7 @@ import { useReducer, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utilities";
-import { useToast } from "../Contexts";
+import { useAuth, useToast } from "../Contexts";
 import { Action } from "history";
 
 export function Signup() {
@@ -14,7 +14,7 @@ export function Signup() {
   const [userName, setUserName] = useState("");
 
   const { showToast } = useToast();
-
+ const {loginWithCredentials}=useAuth()
   function showHidePassword() {
     inputType === "password" ? setInputType("text") : setInputType("password");
   }

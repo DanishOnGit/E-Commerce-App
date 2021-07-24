@@ -63,6 +63,9 @@ export const ProductPage = () => {
         <p>
           <span className="strong">Weight:</span> {product.weight} gm
         </p>
+        <p>
+          <span className="strong">Level:</span> {product.level}
+        </p>
         <p className="strong">
           {" "}
           Price: Rs{getFinalPrice(product.price, product.discount)}{" "}
