@@ -1,5 +1,6 @@
 import coverPic from "../images/cover-image.jpg";
 import { Link } from "react-router-dom";
+import { brands } from "../utilities";
 export function Homepage() {
   return (
     <div className="home-page-wrapper">
@@ -12,6 +13,12 @@ export function Homepage() {
           </button>
         </Link>
       </div>
+
+      {/* <div class='display-grid-4-4 vertical-middle gap-6'>
+                    {brands.map((brand) => {
+                        return <img class='responsive' src={brand?.image} />;
+                    })}
+                </div> */}
     </div>
   );
 }

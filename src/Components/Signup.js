@@ -14,7 +14,6 @@ export function Signup() {
   const [userName, setUserName] = useState("");
 
   const { showToast } = useToast();
- const {loginWithCredentials}=useAuth()
   function showHidePassword() {
     inputType === "password" ? setInputType("text") : setInputType("password");
   }

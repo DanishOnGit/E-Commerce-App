@@ -18,7 +18,7 @@ export function Wishlist() {
 
   const {
     state: { wishlistItems, cartItems },
-    dispatch
+    dispatch,
   } = useCart();
 
   function getFilteredWishlistData(wishlistItems) {
@@ -54,10 +54,21 @@ export function Wishlist() {
             >
               <div className="product-details-wrapper">
                 <div className="card-image">
-                  <img className="resized-card-image" src={item.image} alt="product-image" />
+                  <img
+                    className="resized-card-image"
+                    src={item.image}
+                    alt="product-image"
+                  />
                   <button
                     onClick={() =>
-                      wishlistHandler(wishlistItems, dispatch, item,showToast,setIsDisabled,isRendered)
+                      wishlistHandler(
+                        wishlistItems,
+                        dispatch,
+                        item,
+                        showToast,
+                        setIsDisabled,
+                        isRendered
+                      )
                     }
                     className="btn btn-secondary remove-btn"
                   >
@@ -73,29 +84,30 @@ export function Wishlist() {
                     <span className="line-through">Rs. {item.price} </span>
                     <span className="discount">{item.discount}% OFF</span>
                   </p>
+                  <button
+                  disabled={!item.inStock || isDisabled}
+                  onClick={() => {
+                    addToCartHandler(
+                      cartItems,
+                      dispatch,
+                      item,
+                      showToast,
+                      setIsDisabled,
+                      isRendered
+                    );
+                    wishlistHandler(wishlistItems, dispatch, item);
+                  }}
+                  className={
+                    item.inStock
+                      ? "btn btn-primary move-to-cart-btn"
+                      : "btn btn-primary disabled move-to-cart-btn"
+                  }
+                >
+                  Move to cart
+                </button>
                 </div>
+                
               </div>
-              <button
-                disabled={!item.inStock || isDisabled}
-                onClick={() => {
-                  addToCartHandler(
-                    cartItems,
-                    dispatch,
-                    item,
-                    showToast,
-                    setIsDisabled,
-                    isRendered
-                  );
-                  wishlistHandler(wishlistItems, dispatch, item);
-                }}
-                className={
-                  item.inStock
-                    ? "btn btn-primary move-to-cart-btn"
-                    : "btn btn-primary disabled move-to-cart-btn"
-                }
-              >
-                Move to cart
-              </button>
             </div>
           );
         })}

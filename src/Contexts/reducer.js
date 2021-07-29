@@ -14,6 +14,9 @@ export function reducer(state, action) {
     case "GET_WISHLIST_ITEMS":
       return { ...state, wishlistItems: action.payload };
 
+      case "GET_ALL_ADDRESSES":
+      return { ...state, addresses: action.payload };
+
     case "PRICE_LOW_TO_HIGH":
       return {
         ...state,

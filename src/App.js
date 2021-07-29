@@ -14,10 +14,12 @@ import {
   PageNotFound,
   Cart,
   Wishlist,
+  Profile,
 } from "./Components";
 import { useCart } from "./Contexts/CartContext";
 import { API_URL } from "./utilities";
 import { useAuth } from "./Contexts";
+
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -44,15 +46,31 @@ export default function App() {
         console.log(err);
       }
     })();
+
     if (userToken) {
       (async function () {
         try {
           const response = await axios({
             method: "GET",
+            url: `${API_URL}/address`,
+            
+          });
+
+          dispatch({
+            type: "GET_ALL_ADDRESSES",
+            payload: response.data.addresses,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+
+      (async function () {
+        try {
+          const response = await axios({
+            method: "GET",
             url: `${API_URL}/wishlist`,
-            headers: {
-              userToken: userToken,
-            },
+            
           });
 
           dispatch({
@@ -68,9 +86,7 @@ export default function App() {
           const response = await axios({
             method: "GET",
             url: `${API_URL}/cart`,
-            headers: {
-              userToken: userToken,
-            },
+            
           });
 
           dispatch({
@@ -87,7 +103,7 @@ export default function App() {
   return (
     <div className="App">
       <Navbar searchText={searchText} setSearchText={setSearchText} />
-
+<div className="spacer-mobile"></div>
       {loading ? (
         <Loader type="ThreeDots" color="#fc452e" height={80} width={80} />
       ) : (
@@ -111,6 +127,8 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <PrivateRoute path="/cart" element={<Cart />} />
           <PrivateRoute path="/wishlist" element={<Wishlist />} />
+          <PrivateRoute path="/profile" element={<Profile />} />
+          {/* <PrivateRoute path="/address" element={<Address />} /> */}
           <Route
             path="/productsListingPage/product/:itemId"
             element={<ProductPage />}

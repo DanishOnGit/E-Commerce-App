@@ -6,20 +6,26 @@ import {
   setupAuthExceptionHandler,
   setupAuthHeaderForServiceCalls,
 } from "../utilities";
-
 import { useToast } from "./ToastContext";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-
   const token = JSON.parse(localStorage?.getItem("userToken")) || {
     authToken: null,
+    name: "",
+    email: "",
   };
-  setupAuthHeaderForServiceCalls(token?.authToken);
+  if (token?.authToken) {
+    setupAuthHeaderForServiceCalls(token?.authToken);
+  }
 
   const [userToken, setUserToken] = useState(token?.authToken);
-  
+  const [userDetails, setUserDetails] = useState({
+    name: token?.name,
+    email: token?.email,
+  });
+
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -30,7 +36,7 @@ export function AuthProvider({ children }) {
   async function loginWithCredentials(email, password) {
     try {
       const {
-        data: { token },
+        data: { token, usersName, usersEmail },
         status,
       } = await axios({
         method: "POST",
@@ -39,13 +45,18 @@ export function AuthProvider({ children }) {
       });
 
       if (status === 200) {
-        setUserToken(token);
         setupAuthHeaderForServiceCalls(token);
+        setUserToken(token);
+        setUserDetails({ name: usersName, email: usersEmail });
         showToast("Login successfull !", "success");
 
         localStorage?.setItem(
           "userToken",
-          JSON.stringify({ authToken: token })
+          JSON.stringify({
+            authToken: token,
+            name: usersName,
+            email: usersEmail,
+          })
         );
         return true;
       } else {
@@ -60,6 +71,7 @@ export function AuthProvider({ children }) {
   function logoutUser() {
     localStorage?.removeItem("userToken");
     setUserToken(null);
+    setUserDetails({name:"",email:""})
     setupAuthHeaderForServiceCalls(null);
     navigate("/login");
   }
@@ -70,6 +82,7 @@ export function AuthProvider({ children }) {
         loginWithCredentials,
         logoutUser,
         userToken,
+        userDetails,
       }}
     >
       {children}

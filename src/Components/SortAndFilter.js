@@ -14,6 +14,13 @@ export function SortAndFilter() {
   const categories = ["Racket", "Shoes", "Bags"];
   return (
     <div className="sort-filter-wrapper mobile-sort-filter">
+      <button
+        className="btn btn-link"
+        onClick={() => dispatch({ type: "CLEAR_FILTERS" })}
+      >
+        Clear all filters
+      </button>
+      <br/>
       <fieldset>
         <legend>Sort BY:</legend>
         <ul className="list-non-bullet">
@@ -91,7 +98,7 @@ export function SortAndFilter() {
         <h4 className="filter-heading">Category</h4>
         <ul className="list-non-bullet">
           {categories.map((category) => (
-            <li>
+            <li key={category}>
               <label>
                 <input
                   onChange={() =>
@@ -110,12 +117,7 @@ export function SortAndFilter() {
         </ul>
       </fieldset>
       <br />
-      <button
-        className="btn btn-link"
-        onClick={() => dispatch({ type: "CLEAR_FILTERS" })}
-      >
-        Clear all filters
-      </button>
+      
     </div>
   );
 }

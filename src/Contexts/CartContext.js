@@ -12,6 +12,7 @@ export function CartProvider({ children }) {
     productsList: [],
     cartItems: [],
     wishlistItems: [],
+    addresses:[]
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);

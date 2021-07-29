@@ -4,6 +4,7 @@
   --white-color: white;
   --black-color: black;
   --grey-color: grey;
+  --darkgrey-color: rgb(95, 95, 95);
   --green-color: green;
   --red-color: red;
   --light-grey-color: rgba(214, 212, 212, 0.535);
@@ -16,13 +17,31 @@
 }
 
 /* General styling */
+.color-grey{
+  color:var(--darkgrey-color)
+}
+.px-1{
+  padding: 0 1rem;
+}
+@media screen and (max-width:556px) {
+  .spacer-mobile{
+    margin-bottom: 4rem;
+  }
+}
+
+.avatar{
+  color:var(--darkgrey-color);
+}
+.btn-icon{
+  color: var(--darkgrey-color)
+}
 .product-listing-page-header,
 .wishlist-header,
 .cart-header {
   margin: 2rem 0;
 }
 .styled {
-  color: var(--pri-color);
+ color: var(--black-color);
   text-decoration: none;
 }
 .hamburger {
@@ -31,7 +50,7 @@
 .active-page {
   text-decoration: none;
   font-weight: bold;
-  color: var(--pri-color);
+  color: var(--black-color);
 }
 .all-products {
   text-decoration: none;
@@ -41,6 +60,9 @@
   font-size: 1rem;
 }
 .badge-on-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 0;
   right: -0.2rem;
@@ -50,6 +72,20 @@
   border-radius: 50%;
   color: var(--white-color);
   background-color: var(--pri-color);
+}
+/* Navbar styling */
+.nav-wrapper-3 {
+  background-color: transparent;
+  color: var(--black-color);
+  padding: 0 3rem;
+}
+@media screen and (min-width:768px){
+  .nav-wrapper-3{
+    padding: 0 1rem;
+  }
+  .brand{
+    margin-left: 1rem;
+  }
 }
 @media screen and (max-width: 556px) {
   .view-mobile {
@@ -74,7 +110,12 @@
     display: block;
   }
 }
-
+.search-wrapper_input{
+  outline: 1px solid var(--grey-color);
+}
+.search-wrapper_input:focus{
+  outline: 1px solid var(--pri-color);
+}
 @media screen and (max-width: 768px) {
   .nav-wrapper-3 .list-centered {
     display: block;
@@ -119,6 +160,13 @@
   .display-grid-2-2.cart-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+.vertical-middle {
+  justify-content: center;
+  align-items: center;
+}
+.gap-6 {
+  gap: 2rem;
 }
 
 /* Product cards on product listing page styling */
@@ -180,7 +228,12 @@
 .product-details-wrapper {
   text-align: left;
   flex-grow: 2;
-  padding: 0.2rem;
+  padding: 0 1rem;
+}
+@media screen and (max-width:556px){
+  .product-details-wrapper{
+    padding: 0.2rem;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -251,7 +304,7 @@
   text-align: left;
 }
 .image-card-wrapper .move-to-cart-btn {
-  margin-left: 0.3rem;
+  margin-left: 0rem;
 }
 .wishlist-product-card {
   padding: 0.5rem;
@@ -285,6 +338,7 @@ fieldset {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: 0;
 }
 @media screen and (min-width: 556px) {
   .sort-filter-wrapper {
@@ -292,6 +346,7 @@ fieldset {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-left: 1.5rem;
   }
   .list-non-bullet,
   .filter-heading {
@@ -396,10 +451,45 @@ fieldset {
   transition: 400ms ease;
 }
 
-/* Navbar styling */
-.nav-wrapper-3 {
-  background-color: transparent;
-  color: var(--black-color);
+
+
+/* Profile page styling */
+
+.profile-card-wrapper{
+  position: relative;
+  display: flex;
+  text-align: left;
+  padding: 3rem 1rem;
+  box-shadow: 0 0 10px 2px var(--light-grey-color);
+  max-width: 90vw;
+   margin: auto;
+}
+.absolute{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+@media screen and (min-width:768px){
+  .profile-card-wrapper{
+    max-width: 35rem;
+  }
+}
+.profile-avatar-wrapper{
+  height: 6rem;
+  width: 6rem;
+ 
+}
+.profile-avatar{
+  font-size: 3rem;
+}
+
+@media screen and (min-width:556px){
+  .profile-avatar{
+    font-size: 5rem;
+  }
+  .profile-detail{
+    font-size: 1.5rem;
+  }
 }
 
 /* New Cart styling */
@@ -559,6 +649,20 @@ fieldset {
 }
 .form-error {
   color: var(--red-color);
+}
+
+.address-form{
+  text-align: left;
+  width: 90vw;
+  margin: auto;
+  margin-top: 2rem;
+}
+@media screen and (min-width:768px){
+  .address-form{
+    width: fit-content;
+    padding: 1rem;
+    border: 1px solid var(--black-color);
+  }
 }
 
 /* Toast styling */
