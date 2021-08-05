@@ -8,6 +8,7 @@
   --green-color: green;
   --red-color: red;
   --light-grey-color: rgba(214, 212, 212, 0.535);
+  --very-light-grey-color:rgba(163, 163, 163, 0.44);
   --z-index-99: 99;
 }
 .App {
@@ -249,7 +250,7 @@
 .product-wrapper {
   width: 95vw;
   height: 12rem;
-  box-shadow: 0 0 13px 3px var(--grey-color);
+  box-shadow: 1px 1px 14px 0px var(--very-light-grey-color);
   border-radius: 0.35rem;
   position: absolute;
   top: 50%;
