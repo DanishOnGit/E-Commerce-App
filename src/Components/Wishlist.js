@@ -33,7 +33,7 @@ export function Wishlist() {
   }
 
   return (
-    <>
+    <div className="mb-3">
       <h1 className="wishlist-header centered">
         Your Wishlist{" "}
         <span className="small light-weight">
@@ -112,6 +112,6 @@ export function Wishlist() {
           );
         })}
       </div>
-    </>
+    </div>
   );
 }

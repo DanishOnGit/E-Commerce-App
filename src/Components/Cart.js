@@ -18,23 +18,31 @@ export function Cart() {
   const filteredCartData = getFilteredCartData(cartItems);
 
   return (
-    <>
-      {isOrderPlaced?<OrderConfirmation/>: <> <h1 className="cart-header centered">Your Cart</h1>
-
-      {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
-      {filteredCartData.length !== 0 && (
-        <div className="display-grid-2-2 cart-grid fixed-width">
-          <div className="added-items-wrapper">
-            {filteredCartData.map(({ cartQuantity, productId: item }) => {
-              return <CartItemCard cartQuantity={cartQuantity} item={item} />;
-            })}
-          </div>
-          <OrderSummary
-            filteredCartData={filteredCartData}
-            setIsOrderPlaced={setIsOrderPlaced}
-          />
-        </div>
-      )}</>}
-    </>
+    <div className="mb-3">
+      {isOrderPlaced ? (
+        <OrderConfirmation />
+      ) : (
+        <>
+          {" "}
+          <h1 className="cart-header centered">Your Cart</h1>
+          {filteredCartData.length === 0 && <h1>Cart is Empty</h1>}
+          {filteredCartData.length !== 0 && (
+            <div className="display-grid-2-2 cart-grid fixed-width">
+              <div className="added-items-wrapper">
+                {filteredCartData.map(({ cartQuantity, productId: item }) => {
+                  return (
+                    <CartItemCard cartQuantity={cartQuantity} item={item} />
+                  );
+                })}
+              </div>
+              <OrderSummary
+                filteredCartData={filteredCartData}
+                setIsOrderPlaced={setIsOrderPlaced}
+              />
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 }

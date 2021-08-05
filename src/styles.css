@@ -14,10 +14,12 @@
 .App {
   font-family: sans-serif;
   text-align: center;
-  margin-bottom: 3rem;
 }
 
 /* General styling */
+.mb-3{
+  margin-bottom: 3rem;
+}
 .color-grey{
   color:var(--darkgrey-color)
 }
@@ -416,11 +418,12 @@ fieldset {
 /* Homepage styles */
 .home-page-wrapper {
   position: relative;
-  height: calc(100vh - 4.5rem);
+  height: calc(100vh - 5.4rem);
   background: url("/src/images/cover-image.jpg");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 .cover-pic {
   filter: blur(3px);

@@ -86,7 +86,7 @@ export const ProductsListingPage = ({
 
 
   return (
-    <div>
+    <div className="mb-3">
       <Toast />
 
       <h1 className="product-listing-page-header centered">
